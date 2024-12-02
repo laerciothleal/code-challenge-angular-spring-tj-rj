@@ -1,0 +1,90 @@
+/* Container do relatório */
+div {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título do relatório */
+  h2 {
+    text-align: center;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilização da tabela */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  thead {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  thead th {
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody td {
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Adicionar uma linha hover */
+  tbody tr:hover {
+    background-color: #e9ecef;
+  }
+  
+  /* Alinhamento e formatação de valores */
+  td:last-child {
+    text-align: right;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    table {
+      font-size: 12px;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  }
+    
+/* Estilo global para todos os th */
+thead[_ngcontent-ng-c2394302268] th[_ngcontent-ng-c2394302268] {
+  padding: 10px;
+  /* text-align: left; */ /* Comentado para evitar sobrescrita */
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Estilo específico para o cabeçalho Valor */
+.valor-coluna-header[_ngcontent-ng-c2394302268] {
+  text-align: right; /* Alinha o cabeçalho à direita */
+  padding-right: 15px; /* Adiciona espaço à direita */
+  font-weight: bold; /* Mantém o negrito */
+  color: white; /* Mantém o texto branco */
+}

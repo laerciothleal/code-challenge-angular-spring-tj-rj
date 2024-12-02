@@ -1,0 +1,62 @@
+@if (viewMode){
+  @if (currentAutor.codau){
+  <h4>Autor</h4>
+
+  <div>
+    <label><strong>Id: </strong></label> {{ currentAutor.codau }}
+  </div>
+
+  <div>
+    <label><strong>Nome: </strong></label> {{ currentAutor.nome }}
+  </div>
+
+  <a class="btn badge-warning" routerLink="/autor/{{currentAutor.codau}}">
+  Atualizar
+  </a>
+
+  } @else {<p>Selecione um item da lista para edição!</p>}
+} @else {
+  @if (currentAutor.codau) {
+  <div class="edit-form">
+    <h4>Autor</h4>
+    <form>
+
+      <div class="form-group">
+        <label for="id">Id:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="id"
+          readonly
+          [(ngModel)]="currentAutor.codau"
+          name="id"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nome"
+          [(ngModel)]="currentAutor.nome"
+          name="nome"
+          maxlength="40"
+        />
+      </div>
+  
+    </form>
+
+    <button type="button" class="btn btn-danger mr-2" (click)="deleteAutor()">Deletar</button>
+
+    <a type="submit"
+      class="btn badge-warning"
+      (click)="updateAutor()">
+      Atualizar
+    </a>
+    <a href="/autor" class="btn btn-dark margin-button-left">Autor</a>
+
+    <p>{{ message }}</p>
+  </div>
+  } @else {<p>Cannot access this Autor...</p>}
+}

@@ -1,0 +1,65 @@
+@if (viewMode){
+  @if (currentAssunto.codas){
+  <h4>Assunto</h4>
+
+  <div>
+    <label><strong>Id: </strong></label> {{ currentAssunto.codas }}
+  </div>
+
+  <div>
+    <label><strong>Descrição: </strong></label> {{ currentAssunto.descricao }}
+  </div>
+
+
+  <a class="btn badge-warning" routerLink="/assunto/{{ currentAssunto.codas }}">
+  Atualizar
+  </a>
+  
+
+  } @else {<p>Selecione um item da lista para edição!</p>}
+} @else {
+  @if (currentAssunto.codas) {
+  <div class="edit-form">
+    <h4>Assunto</h4>
+    <form>
+
+      <div class="form-group">
+        <label for="id">Id:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="id"
+          readonly
+          [(ngModel)]="currentAssunto.codas"
+          name="id"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input
+          type="text"
+          class="form-control"
+          id="descricao"
+          [(ngModel)]="currentAssunto.descricao"
+          name="descricao"
+          maxlength="20"
+        />
+      </div>
+  
+    </form>
+
+    <button type="button" class="btn btn-danger mr-2" (click)="deleteAssunto()">Deletar</button>
+
+
+    <a type="submit"
+      class="btn badge-warning"
+      (click)="updateAssunto()">
+      Atualizar
+    </a>
+    <a href="/assunto" class="btn btn-dark margin-button-left">Assunto</a>
+
+    <p>{{ message }}</p>
+  </div>
+  } @else {<p>Cannot access this Assunto...</p>}
+}

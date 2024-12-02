@@ -1,0 +1,111 @@
+<div>
+  <div class="submit-form">
+    <form>
+      <h4>Livro</h4>
+      <div *ngIf="!submitted">
+
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="titulo"
+            required
+            [(ngModel)]="livro.titulo"
+            name="titulo"
+            maxlength="40"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="editora">Editora</label>
+          <input
+            type="text"
+            class="form-control"
+            id="editora"
+            required
+            [(ngModel)]="livro.editora"
+            name="editora"
+            maxlength="40"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="edicao">Edição</label>
+          <input
+            type="number"
+            class="form-control"
+            id="edicao"
+            required
+            [(ngModel)]="livro.edicao"
+            name="edicao"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="anoPublicacao">Ano Publicação</label>
+          <input
+            type="text"
+            class="form-control"
+            id="anoPublicacao"
+            required
+            [(ngModel)]="livro.anoPublicacao"
+            name="anoPublicacao"
+            maxlength="4"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="valor">Valor</label>
+          <input
+            type="text"
+            class="form-control"
+            id="valor"
+            required
+            [(ngModel)]="livro.valor"
+            name="valor"
+            mask="separator.2"
+            thousandSeparator="."
+            decimalMarker=","
+            prefix="R$ "
+            [dropSpecialCharacters]="true"
+            pattern="^\d{1,7}(\.\d{0,2})?$"
+            maxlength="12"
+            title="O valor deve estar no formato válido (máximo 10 dígitos com 2 decimais)"
+          />
+        </div>
+        
+
+        <div class="form-group">
+          <label for="autores">Autores:</label>
+          <select 
+            multiple 
+            [(ngModel)]="livroRequest.autoresIds" 
+            name="autores" 
+            class="form-control">
+            <option *ngFor="let autor of autores" [value]="autor.codau">{{ autor.nome }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="assuntos">Assuntos:</label>
+          <select 
+            multiple 
+            [(ngModel)]="livroRequest.assuntosIds" 
+            name="assuntos" 
+            class="form-control">
+            <option *ngFor="let assunto of assuntos" [value]="assunto.codas">{{ assunto.descricao }}</option>
+          </select>
+        </div>
+
+        <button (click)="saveLivro()" class="btn btn-success">Salvar</button>
+      </div>
+      <div *ngIf="submitted">
+        <h4>Livro criado com sucesso!</h4>
+        <button class="btn btn-primary" (click)="newLivro()">Adicionar</button>
+        <a href="/livro" class="btn btn-dark margin-button-left">Livro</a>
+      </div>
+      <p>{{ message }}</p>
+    </form>
+  </div>
+</div>

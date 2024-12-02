@@ -1,0 +1,31 @@
+<div>
+  <div class="submit-form">
+    <form>
+      <h4>Autor</h4>
+      <div *ngIf="!submitted">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            required
+            [(ngModel)]="autor.nome"
+            name="nome"
+            maxlength="40"
+          />
+        </div>
+
+
+        <button (click)="saveAutor()" class="btn btn-success">Salvar</button>
+      </div>
+      <div *ngIf="submitted">
+        <h4>Autor criado com sucesso!</h4>
+        <button class="btn btn-primary" (click)="newAutor()">Adicionar</button>
+
+        <a href="/autor" class="btn btn-dark margin-button-left">Autor</a>
+      </div>
+      <p>{{ message }}</p>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="list row">
+  <div class="col-md-6">
+    <h4>Assuntos</h4>
+
+    <a class="btn btn-primary bottom-space" routerLink="/add/assunto">
+      Adicionar
+    </a>
+    <ul class="list-group">
+      <li
+        *ngFor="let assunto of assuntos; let i = index; trackBy: trackByCodAs"
+        class="list-group-item"
+        [class.active]="i == currentIndex"
+        (click)="setActiveAssunto(assunto, i)"
+      >
+        Id: {{ assunto.codas }} <br />
+        Título: {{ assunto.descricao }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <app-assunto-details
+      [viewMode]="true"
+      [currentAssunto]="currentAssunto"
+    ></app-assunto-details>
+  </div>
+</div>

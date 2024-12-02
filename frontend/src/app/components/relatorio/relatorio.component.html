@@ -1,0 +1,27 @@
+<div>
+  <h2>Relatório: Livros por Autor</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Assunto</th>
+        <th>Título</th>
+        <th>Editora</th>
+        <th>Edição</th>
+        <th>Ano</th>
+        <th class="valor-coluna-header">Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of relatorio">
+        <td>{{ item.autorNome }}</td>
+        <td>{{ item.livroAssuntos }}</td>
+        <td>{{ item.livroTitulo }}</td>
+        <td>{{ item.livroEditora }}</td>
+        <td>{{ item.livroEdicao }}</td>
+        <td>{{ item.livroAnoPublicacao }}</td>
+        <td>{{ item.livroValor | currency:'BRL':'symbol':'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

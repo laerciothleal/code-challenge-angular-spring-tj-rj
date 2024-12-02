@@ -1,0 +1,154 @@
+@if (viewMode) {
+  @if (currentLivro.codL) {
+  <h4>Livro</h4>
+  <div>
+    <label><strong>Id: </strong></label> {{ currentLivro.codL }}
+  </div>
+  <div>
+    <label><strong>Título: </strong></label> {{ currentLivro.titulo }}
+  </div>
+  <div>
+    <label><strong>Editora: </strong></label> {{ currentLivro.editora }}
+  </div>
+  <div>
+    <label><strong>Edição: </strong></label> {{ currentLivro.edicao }}
+  </div>
+  <div>
+    <label><strong>Ano Publicação: </strong></label> {{ currentLivro.anoPublicacao }}
+  </div>
+  <div>
+    <label><strong>Valor: </strong></label> {{ currentLivro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+  </div>
+
+  <a class="btn badge-warning" routerLink="/livro/{{currentLivro.codL}}">
+    Atualizar
+  </a>
+  } @else {
+  <p>Selecione um item da lista para edição!</p>
+  }
+} @else {
+  @if (currentLivro.codL) {
+  <div class="edit-form">
+    <h4>Livro</h4>
+    <form>
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input
+          type="text"
+          class="form-control"
+          id="id"
+          readonly
+          [(ngModel)]="currentLivro.codL"
+          name="id"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input
+          type="text"
+          class="form-control"
+          id="titulo"
+          [(ngModel)]="currentLivro.titulo"
+          name="titulo"
+        />
+      </div>
+      <div class="form-group">
+        <label for="editora">Editora</label>
+        <input
+          type="text"
+          class="form-control"
+          id="editora"
+          [(ngModel)]="currentLivro.editora"
+          name="editora"
+        />
+      </div>
+      <div class="form-group">
+        <label for="edicao">Edição</label>
+        <input
+          type="text"
+          class="form-control"
+          id="edicao"
+          required
+          [(ngModel)]="currentLivro.edicao"
+          name="edicao"
+        />
+      </div>
+      <div class="form-group">
+        <label for="anoPublicacao">Ano Publicação</label>
+        <input
+          type="text"
+          class="form-control"
+          id="anoPublicacao"
+          required
+          [(ngModel)]="currentLivro.anoPublicacao"
+          name="anoPublicacao"
+        />
+      </div>
+      <div class="form-group">
+        <label for="valor">Valor</label>
+        <input
+          type="text"
+          class="form-control"
+          id="valor"
+          required
+          [(ngModel)]="currentLivro.valor"
+          name="valor"
+          mask="separator.2"
+          thousandSeparator="."
+          decimalMarker=","
+          prefix="R$ "
+          [dropSpecialCharacters]="true"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="autores">Autores:</label>
+        <select
+          multiple
+          [(ngModel)]="livroRequest.autoresIds"
+          name="autores"
+          class="form-control"
+        >
+          <option
+            *ngFor="let autor of autores"
+            [value]="autor.codau"
+            [selected]="livroRequest.autoresIds.includes(autor.codau)"
+          >
+            {{ autor.nome }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="assuntos">Assuntos:</label>
+        <select
+          multiple
+          [(ngModel)]="livroRequest.assuntosIds"
+          name="assuntos"
+          class="form-control"
+        >
+          <option
+            *ngFor="let assunto of assuntos"
+            [value]="assunto.codas"
+            [selected]="livroRequest.assuntosIds.includes(assunto.codas)"
+          >
+            {{ assunto.descricao }}
+          </option>
+        </select>
+      </div>
+      
+
+    </form>
+    
+    <button type="button" class="btn btn-danger mr-2" (click)="deleteLivro()">Deletar</button>
+
+    <button class="btn badge-warning" (click)="updateLivro()">Atualizar</button>
+
+    <a href="/livro" class="btn btn-dark margin-button-left">Voltar</a>
+    
+    <p>{{ message }}</p>
+  </div>
+  } @else {<p>Cannot access this Livro...</p>}
+}
+

@@ -1,0 +1,26 @@
+<div class="list row">
+  <div class="col-md-6">
+    <h4>Autores</h4>
+
+    <a class="btn btn-primary bottom-space"routerLink="/add/autor">
+      Adicionar
+    </a>
+    <ul class="list-group">
+      <li
+        *ngFor="let autor of autores; let i = index; trackBy: trackByCodau"
+        class="list-group-item"
+        [class.active]="i == currentIndex"
+        (click)="setActiveAutor(autor, i)"
+      >
+        Id: {{ autor.codau }} <br />
+        Nome: {{ autor.nome }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <app-autor-details
+      [viewMode]="true"
+      [currentAutor]="currentAutor"
+    ></app-autor-details>
+  </div>
+</div>

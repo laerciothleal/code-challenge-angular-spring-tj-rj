@@ -1,0 +1,30 @@
+<div>
+  <div class="submit-form">
+    <form>
+      <h4>Assunto</h4>
+      <div *ngIf="!submitted">
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricao"
+            required
+            [(ngModel)]="assunto.descricao"
+            name="descricao"
+            maxlength="20"
+          />
+        </div>
+
+        <button (click)="saveAssunto()" class="btn btn-success">Salvar</button>
+      </div>
+      <div *ngIf="submitted">
+        <h4>Assunto criado com sucesso!</h4>
+        <button class="btn btn-primary" (click)="newAssunto()">Adicionar</button>
+        
+        <a href="/assunto" class="btn btn-dark margin-button-left">Assunto</a>
+      </div>
+      <p>{{ message }}</p>
+    </form>
+  </div>
+</div>
