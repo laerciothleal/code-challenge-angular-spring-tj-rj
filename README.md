@@ -16,6 +16,6 @@ frontend `http://localhost:8081/livro`
 backend `http://localhost:8080/swagger-ui/index.html`
 
 h2 console `http://localhost:8080/h2/login.jsp`
-  - JDBC URL:  jdbc:h2:~/test
+  - JDBC URL:  jdbc:h2:mem:crud
   - User Name: crud
   - Password:  crud
