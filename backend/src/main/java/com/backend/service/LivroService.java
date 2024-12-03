@@ -31,13 +31,25 @@ public class LivroService {
 
     // Create Livro
     public Livro saveOrUpdateRelations(Livro livro, List<Integer> autoresIds, List<Integer> assuntosIds) {
+        Livro savedLivro = saveLivroAndClearRelations(livro);
+
+        saveLivroAutores(savedLivro, autoresIds);
+        saveLivroAssuntos(savedLivro, assuntosIds);
+
+        return savedLivro;
+    }
+
+    Livro saveLivroAndClearRelations(Livro livro) {
         Livro savedLivro = livroRepository.save(livro);
 
         // Limpar relações antigas de autores e assuntos
         livroAutorRepository.deleteByLivroCodL(savedLivro.getCodL());
         livroAssuntoRepository.deleteByLivroCodL(savedLivro.getCodL());
 
-        // Relacionar autores
+        return savedLivro;
+    }
+
+    void saveLivroAutores(Livro savedLivro, List<Integer> autoresIds) {
         for (Integer autorId : autoresIds) {
             if (autorId == null) {
                 throw new IllegalArgumentException("ID do autor não pode ser nulo.");
@@ -59,8 +71,9 @@ public class LivroService {
 
             livroAutorRepository.save(livroAutor);
         }
+    }
 
-        // Relacionar assuntos
+    void saveLivroAssuntos(Livro savedLivro, List<Integer> assuntosIds) {
         for (Integer assuntoId : assuntosIds) {
             Assunto assunto = assuntoRepository.findById(assuntoId)
                     .orElseThrow(() -> new IllegalArgumentException("Assunto não encontrado: " + assuntoId));
@@ -78,8 +91,6 @@ public class LivroService {
 
             livroAssuntoRepository.save(livroAssunto);
         }
-
-        return savedLivro;
     }
 
     //Update Livro

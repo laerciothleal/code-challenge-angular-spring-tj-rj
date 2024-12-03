@@ -5,6 +5,7 @@ import com.backend.exception.ObjectNotFoundException;
 import com.backend.mappper.AssuntoMapper;
 import com.backend.model.Assunto;
 import com.backend.repository.AssuntoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,16 +14,13 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 @Service
+@AllArgsConstructor
 public class AssuntoService {
 
     private AssuntoRepository assuntoRepository;
 
     private final AssuntoMapper assuntoMapper;
 
-    public AssuntoService(AssuntoRepository assuntoRepository, AssuntoMapper assuntoMapper) {
-        this.assuntoRepository = assuntoRepository;
-        this.assuntoMapper = assuntoMapper;
-    }
 
     // Create or Update Assunto
     public Assunto save(AssuntoRequest request) {
