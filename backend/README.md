@@ -1,6 +1,6 @@
 ## Spring Boot Application
 
-Aplicação backend de CRUD (Criar, Ler, Atualizar, Excluir) que gerencia usuários e seus departamentos associados. 
+Aplicação backend de CRUD
 É desenvolvido em Java 17 e SpringFramework. 
 
 ### Dependências 
@@ -8,6 +8,7 @@ Aplicação backend de CRUD (Criar, Ler, Atualizar, Excluir) que gerencia usuár
 - `spring-boot-starter-web`: Constrói aplicativos da web, incluindo RESTful, usando Spring MVC. Usa Tomcat como contêiner incorporado padrão.
 - `spring-boot-starter-data-jpa`: Fornece suporte JPA e Spring Data JPA para o aplicativo.
 - `spring-boot-starter-test`: Fornece bibliotecas de teste, incluindo JUnit, e Mockito.
+- `spring-boot-starter-validation`: Fornece bibliotecas de validação
 
 ### Banco de dados e ORM
 - `Banco de dados H2`: um banco de dados leve e integrado, perfeito para desenvolvimento e teste.
@@ -28,22 +29,20 @@ Ele demonstra como consumir APIs REST, exibir dados e realizar várias operaçõ
 
 ### Funcionalidades
 
-- Gestão de Usuários: Cada usuário tem um Id, nome, sobrenome e departamento.
-- Funcionalidade de Busca: Uma barra de pesquisa para encontrar usuários pelo nome.
+- Gestão de Assunto
+- Gestão de Autor
+- Gestão de Livro
+- Relatório de livros por Autor
 
 ### Executar apenas o backend, caso deseje
-`mvn spring-boot:run`. Usar o link `http://localhost:8081/user`
+`mvn spring-boot:run`. Usar o link `http://localhost:8081/livro`
 
 ### Swagger
 Acessar a URL `http://localhost:8080/swagger-ui/index.html`
 
-<img src="db-demo.gif" alt="gif" width="900" height="500">
-
 #### Acessar Console Banco de dados H2
 H2 console `http://localhost:8080/h2/login.jsp`
 
-#### GIF H2
-<img src="db-demo.gif" alt="gif" width="900" height="500">
 
 
 
