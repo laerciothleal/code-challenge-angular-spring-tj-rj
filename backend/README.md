@@ -42,6 +42,7 @@ Acessar a URL `http://localhost:8080/swagger-ui/index.html`
 
 #### Acessar Console Banco de dados H2
 H2 console `http://localhost:8080/h2/login.jsp`
+As credenciais estão na raiz do projeto.
 
 
 
