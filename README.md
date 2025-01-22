@@ -2,11 +2,9 @@
 Esse é a pasta raíz dos dois projetos, entrar em cada projeto para ver suas respectivas configurações.
 
 #### Executar frontend e backend juntos usando docker compose.
+
 ```
-docker-compose build 
-```
-```
-docker-compose up
+docker-compose up --build
 ```
 
 #### Spring Boot vai usar a porta `8080` e o Angular a porta `8081`.
