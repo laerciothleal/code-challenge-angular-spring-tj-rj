@@ -24,6 +24,7 @@ import java.util.List;
 public class RelatorioController {
 
     private final RelatorioService relatorioService;
+
     @Operation(summary = "Recupera view para montar o retorno do relatório", description = "Buscar informções para montar a tela do relatório.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Busca do relatório realizada sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RelatorioResponse.class))),

@@ -1,6 +1,6 @@
 package com.backend.mappper;
 
-import com.backend.controller.v1.request.LivroRequest;
+import com.backend.controller.v1.request.CreateLivroRequest;
 import com.backend.model.Livro;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -16,8 +16,8 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 )
 public interface LivroMapper {
 
-    Livro toEntity(final LivroRequest request);
+    Livro toEntity(final CreateLivroRequest request);
 
-    Livro toEntity(final LivroRequest request, @MappingTarget final Livro entity);
+    Livro toEntity(final CreateLivroRequest request, @MappingTarget final Livro entity);
 
 }

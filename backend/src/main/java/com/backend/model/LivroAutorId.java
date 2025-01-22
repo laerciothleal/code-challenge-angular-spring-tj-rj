@@ -13,9 +13,9 @@ import java.io.Serializable;
 @Builder
 public class LivroAutorId implements Serializable {
 
-    @Column(name = "CodL") // Nome correto para a chave primária de Livro
+    @Column(name = "CodL")
     private Integer livroCodL;
 
-    @Column(name = "CodAu") // Nome correto para a chave primária de Autor
+    @Column(name = "CodAu")
     private Integer autorCodAu;
 }

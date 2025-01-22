@@ -1,7 +1,7 @@
 package com.backend.controller;
 
 import com.backend.controller.v1.AutorController;
-import com.backend.controller.v1.request.AutorRequest;
+import com.backend.controller.v1.request.CreateAutorRequest;
 import com.backend.controller.v1.response.AutorResponse;
 import com.backend.model.Autor;
 import com.backend.service.AutorService;
@@ -34,7 +34,7 @@ class AutorControllerTest {
 
     @Test
     void shouldSaveAutor() {
-        AutorRequest request = new AutorRequest("Test");
+        CreateAutorRequest request = new CreateAutorRequest("Test");
         Autor savedAutor = new Autor(1, "Test");
 
         when(autorService.save(request)).thenReturn(savedAutor);

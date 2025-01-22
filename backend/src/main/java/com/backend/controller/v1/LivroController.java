@@ -1,6 +1,6 @@
 package com.backend.controller.v1;
 
-import com.backend.controller.v1.request.LivroRequest;
+import com.backend.controller.v1.request.CreateLivroRequest;
 import com.backend.controller.v1.response.AssuntoResponse;
 import com.backend.controller.v1.response.AutorResponse;
 import com.backend.controller.v1.response.LivroResponse;
@@ -37,13 +37,13 @@ public class LivroController {
     @Operation(summary = "Criar um livro", description = "Cria um livro com base nas informações fornecidas.")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Livro criado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class)))})
     @PostMapping
-    public ResponseEntity<Livro> save(@Valid @RequestBody LivroRequest livroRequest) {
+    public ResponseEntity<Livro> save(@Valid @RequestBody CreateLivroRequest createLivroRequest) {
 
-        Livro livro = livroMapper.toEntity(livroRequest);
+        Livro livro = livroMapper.toEntity(createLivroRequest);
         Livro savedLivro = livroService.saveOrUpdateRelations(
                 livro,
-                livroRequest.autoresIds(),
-                livroRequest.assuntosIds()
+                createLivroRequest.autoresIds(),
+                createLivroRequest.assuntosIds()
         );
 
         return new ResponseEntity<>(savedLivro, HttpStatus.CREATED);
@@ -57,9 +57,9 @@ public class LivroController {
     })
     @PatchMapping("/{id}")
     public ResponseEntity<Livro> patch(@Parameter(description = "Id do livro") @PathVariable Integer id,
-                                       @Valid @RequestBody LivroRequest livroRequest) {
+                                       @Valid @RequestBody CreateLivroRequest createLivroRequest) {
 
-        Livro updatedLivro = livroService.update(id, livroRequest);
+        Livro updatedLivro = livroService.update(id, createLivroRequest);
         return new ResponseEntity<>(updatedLivro, HttpStatus.OK);
     }
 
@@ -70,7 +70,6 @@ public class LivroController {
     public ResponseEntity<LivroResponse> getById(@Parameter(description = "Id do livro") @PathVariable Integer id) {
         Optional<Livro> livro = livroService.findById(id);
 
-        // Mapear os relacionamentos para os DTOs
         List<AutorResponse> autores = livro.get().getLivroAutores().stream()
                 .map(la -> new AutorResponse(la.getAutor().getCodau(), la.getAutor().getNome()))
                 .collect(Collectors.toList());

@@ -1,13 +1,13 @@
 package com.backend.exception;
 
-public class AssuntoNotFoundException extends RuntimeException {
+public class AutorNotFoundException extends RuntimeException {
 
-    public AssuntoNotFoundException(String assunto) {
-        super(String.format("Assunto com o nome '%s' não foi encontrado no sistema.", assunto));
+    public AutorNotFoundException(String autor) {
+        super(String.format("Autor com o nome '%s' não foi encontrado no sistema.", autor));
     }
 
-    public AssuntoNotFoundException(Integer id) {
-        super(String.format("Assunto com o id '%s' não foi encontrado no sistema.", id));
+    public AutorNotFoundException(Integer id) {
+        super(String.format("Autor com o id '%s' não foi encontrado no sistema.", id));
 
     }
 }

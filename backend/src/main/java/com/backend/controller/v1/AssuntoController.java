@@ -1,6 +1,6 @@
 package com.backend.controller.v1;
 
-import com.backend.controller.v1.request.AssuntoRequest;
+import com.backend.controller.v1.request.CreateAssuntoRequest;
 import com.backend.controller.v1.response.AssuntoResponse;
 import com.backend.model.Assunto;
 import com.backend.model.Livro;
@@ -34,8 +34,8 @@ public class AssuntoController {
             @ApiResponse(responseCode = "201", description = "Assunto criado ou atualizado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AssuntoResponse.class)))
     })
     @PostMapping
-    public ResponseEntity<Assunto> save(@RequestBody AssuntoRequest assuntoRequest) {
-        Assunto savedAssunto = assuntoService.save(assuntoRequest);
+    public ResponseEntity<Assunto> save(@RequestBody CreateAssuntoRequest createAssuntoRequest) {
+        Assunto savedAssunto = assuntoService.save(createAssuntoRequest);
         return new ResponseEntity<>(savedAssunto, HttpStatus.CREATED);
     }
 
@@ -48,8 +48,8 @@ public class AssuntoController {
     })
     @PatchMapping("/{id}")
     public ResponseEntity<Assunto> patch(@Parameter(description = "Id do assunto") @PathVariable Integer id,
-                                         @Valid @RequestBody AssuntoRequest assuntoRequest) {
-        Assunto assunto = assuntoService.update(id, assuntoRequest);
+                                         @Valid @RequestBody CreateAssuntoRequest createAssuntoRequest) {
+        Assunto assunto = assuntoService.update(id, createAssuntoRequest);
         return new ResponseEntity(assunto, HttpStatus.OK);
 
     }

@@ -1,6 +1,6 @@
 package com.backend.controller.v1;
 
-import com.backend.controller.v1.request.AutorRequest;
+import com.backend.controller.v1.request.CreateAutorRequest;
 import com.backend.controller.v1.response.AutorResponse;
 import com.backend.model.Autor;
 import com.backend.model.Livro;
@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,22 +24,18 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/autores")
 @Tag(name = "Autor Controller", description = "API para gerenciamento de autores")
+@RequiredArgsConstructor
 public class AutorController {
 
     private final AutorService autorService;
-
-    public AutorController(AutorService autorService) {
-        this.autorService = autorService;
-    }
-
 
     @Operation(summary = "Criar um autor", description = "Cria um autor com base nas informações fornecidas.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Autor criado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AutorResponse.class)))
     })
     @PostMapping
-    public ResponseEntity<Autor> save(@Valid @RequestBody AutorRequest autorRequest) {
-        Autor savedAutor = autorService.save(autorRequest);
+    public ResponseEntity<Autor> save(@Valid @RequestBody CreateAutorRequest createAutorRequest) {
+        Autor savedAutor = autorService.save(createAutorRequest);
         return new ResponseEntity<>(savedAutor, HttpStatus.CREATED);
     }
 
@@ -47,7 +44,7 @@ public class AutorController {
             @ApiResponse(responseCode = "200", description = "Autor atualizado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class))),
             @ApiResponse(responseCode = "404", description = "Autor não encontrado"), @ApiResponse(responseCode = "500", description = "Erro no servidor")})
     @PatchMapping("/{id}")
-    public ResponseEntity<Autor> patch(@Parameter(description = "Id do livro") @PathVariable Integer id, @Valid @RequestBody AutorRequest livroRequest) {
+    public ResponseEntity<Autor> patch(@Parameter(description = "Id do livro") @PathVariable Integer id, @Valid @RequestBody CreateAutorRequest livroRequest) {
         Autor livro = autorService.update(id, livroRequest);
         return new ResponseEntity(livro, HttpStatus.OK);
 

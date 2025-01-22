@@ -1,6 +1,8 @@
 package com.backend.service;
 
-import com.backend.exception.ObjectNotFoundException;
+import com.backend.exception.AssuntoNotFoundException;
+import com.backend.exception.AutorNotFoundException;
+import com.backend.exception.LivroNotFoundException;
 import com.backend.model.*;
 import com.backend.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,11 +93,11 @@ class LivroServiceTest {
 
         when(autorRepository.findById(1)).thenReturn(Optional.empty());
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        AutorNotFoundException exception = assertThrows(AutorNotFoundException.class, () -> {
             livroService.saveLivroAutores(livro, List.of(1));
         });
 
-        assertEquals("Autor não encontrado: 1", exception.getMessage());
+        assertEquals("Autor com o id '1' não foi encontrado no sistema.", exception.getMessage());
     }
 
     @Test
@@ -105,11 +107,11 @@ class LivroServiceTest {
 
         when(assuntoRepository.findById(1)).thenReturn(Optional.empty());
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        AssuntoNotFoundException exception = assertThrows(AssuntoNotFoundException.class, () -> {
             livroService.saveLivroAssuntos(livro, List.of(1));
         });
 
-        assertEquals("Assunto não encontrado: 1", exception.getMessage());
+        assertEquals("Assunto com o id '1' não foi encontrado no sistema.", exception.getMessage());
     }
 
     @Test
@@ -119,11 +121,11 @@ class LivroServiceTest {
 
         when(livroRepository.findById(1)).thenReturn(Optional.empty());
 
-        ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () -> {
+        LivroNotFoundException exception = assertThrows(LivroNotFoundException.class, () -> {
             livroService.update(1, null);
         });
 
-        assertEquals("Livro não encontrado com id 1", exception.getMessage());
+        assertEquals("Livro com o id '1' não foi encontrado no sistema.", exception.getMessage());
     }
 
     @Test
@@ -137,12 +139,10 @@ class LivroServiceTest {
 
     @Test
     void shouldThrowExceptionWhenLivroNotFoundForDeletion() {
-        when(livroRepository.existsById(1)).thenReturn(false);
+        when(livroRepository.existsById(10)).thenReturn(false);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            livroService.deleteById(1);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> livroService.deleteById(1));
 
-        assertEquals("Livro não encontrado para exclusão com Id: 1", exception.getMessage());
+        assertEquals("Livro não encontrado para exclusão com Id: '1'", exception.getMessage());
     }
 }

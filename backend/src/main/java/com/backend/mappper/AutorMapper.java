@@ -1,6 +1,6 @@
 package com.backend.mappper;
 
-import com.backend.controller.v1.request.AutorRequest;
+import com.backend.controller.v1.request.CreateAutorRequest;
 import com.backend.model.Autor;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -16,7 +16,7 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 )
 public interface AutorMapper {
 
-    Autor toEntity(final AutorRequest request);
+    Autor toEntity(final CreateAutorRequest request);
 
-    Autor toEntity(final AutorRequest request, @MappingTarget final Autor entity);
+    Autor toEntity(final CreateAutorRequest request, @MappingTarget final Autor entity);
 }

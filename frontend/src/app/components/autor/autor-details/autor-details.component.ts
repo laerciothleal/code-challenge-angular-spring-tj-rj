@@ -23,11 +23,9 @@ export class AutorDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     if (!this.viewMode) {
       this.message = '';
       this.getAutor(this.route.snapshot.params['id']);
-      
     }
   }
 
@@ -35,7 +33,6 @@ export class AutorDetailsComponent implements OnInit {
     this.autorService.get(id).subscribe({
       next: (data) => {
         this.currentAutor = data;
-        console.log(data);
       },
       error: (e) => console.error(e),
     });

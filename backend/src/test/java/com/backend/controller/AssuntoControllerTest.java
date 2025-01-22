@@ -1,7 +1,7 @@
 package com.backend.controller;
 
 import com.backend.controller.v1.AssuntoController;
-import com.backend.controller.v1.request.AssuntoRequest;
+import com.backend.controller.v1.request.CreateAssuntoRequest;
 import com.backend.model.Assunto;
 import com.backend.service.AssuntoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ class AssuntoControllerTest {
 
     @Test
     void shouldSaveAssunto() {
-        AssuntoRequest request = new AssuntoRequest("Test");
+        CreateAssuntoRequest request = new CreateAssuntoRequest("Test");
         Assunto savedAssunto = new Assunto(1, "Test");
 
         when(assuntoService.save(request)).thenReturn(savedAssunto);

@@ -1,21 +1,21 @@
 CREATE OR replace VIEW vw_livros_por_autor AS
 SELECT
-    A.Nome AS autor_nome,
-    L.Titulo AS livro_titulo,
-    L.Editora AS livro_editora,
-    L.Edicao AS livro_edicao,
-    L.Ano_publicacao AS livro_ano_publicacao,
-    L.Valor AS livro_valor,
-    GROUP_CONCAT(ASn.Descricao ORDER BY ASn.Descricao ASC separator ', ') AS livro_ASsuntos
+    a.nome AS autor_nome,
+    l.titulo AS livro_titulo,
+    l.editora AS livro_editora,
+    l.edicao AS livro_edicao,
+    l.ano_publicacao AS livro_ano_publicacao,
+    l.valor AS livro_valor,
+    group_concat(asn.descricao ORDER BY asn.descricao ASC separator ', ') AS livro_assuntos
 FROM
-    Autor a
+    autor a
 JOIN
-    Livro_autor la ON a.Codau = la.Codau
+    livro_autor la ON a.codau = la.codau
 JOIN
-    Livro l ON la.Codl = l.Codl
-Left join
-    Livro_ASsunto lAS ON l.Codl = lAS.Codl
+    livro l ON la.codl = l.codl
 LEFT JOIN
-    Assunto ASn ON lAS.CodAS = ASn.CodAS
+    livro_assunto las ON l.codl = las.codl
+left join
+    assunto asn ON las.codas = asn.codas
 GROUP BY
-    A.Nome, l.Titulo, l.Editora, l.Edicao, l.Ano_publicacao, l.Valor;
+    a.nome, l.titulo, l.editora, l.edicao, l.ano_publicacao, l.valor;

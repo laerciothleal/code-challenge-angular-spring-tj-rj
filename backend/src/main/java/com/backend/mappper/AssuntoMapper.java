@@ -1,6 +1,6 @@
 package com.backend.mappper;
 
-import com.backend.controller.v1.request.AssuntoRequest;
+import com.backend.controller.v1.request.CreateAssuntoRequest;
 import com.backend.model.Assunto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -16,7 +16,7 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 )
 public interface AssuntoMapper {
 
-    Assunto toEntity(final AssuntoRequest request);
+    Assunto toEntity(final CreateAssuntoRequest request);
 
-    Assunto toEntity(final AssuntoRequest request, @MappingTarget final Assunto entity);
+    Assunto toEntity(final CreateAssuntoRequest request, @MappingTarget final Assunto entity);
 }

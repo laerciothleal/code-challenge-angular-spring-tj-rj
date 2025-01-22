@@ -1,7 +1,7 @@
 package com.backend.service;
 
-import com.backend.controller.v1.request.AssuntoRequest;
-import com.backend.exception.ObjectNotFoundException;
+import com.backend.controller.v1.request.CreateAssuntoRequest;
+import com.backend.exception.AssuntoNotFoundException;
 import com.backend.mappper.AssuntoMapper;
 import com.backend.model.Assunto;
 import com.backend.repository.AssuntoRepository;
@@ -34,7 +34,7 @@ class AssuntoServiceTest {
 
     @Test
     void shouldSaveAssunto() {
-        AssuntoRequest request = new AssuntoRequest("Assunto Teste");
+        CreateAssuntoRequest request = new CreateAssuntoRequest("Assunto Teste");
         Assunto mappedAssunto = new Assunto(1, "Assunto Teste");
 
         when(assuntoMapper.toEntity(request)).thenReturn(mappedAssunto);
@@ -49,12 +49,12 @@ class AssuntoServiceTest {
 
     @Test
     void shouldThrowWhenUpdatingNonExistingAssunto() {
-        AssuntoRequest request = new AssuntoRequest("Assunto Teste");
+        CreateAssuntoRequest request = new CreateAssuntoRequest("Assunto Teste");
         int id = 1;
 
         when(assuntoRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(ObjectNotFoundException.class, () -> assuntoService.update(id, request));
+        assertThrows(AssuntoNotFoundException.class, () -> assuntoService.update(id, request));
     }
 
     @Test
