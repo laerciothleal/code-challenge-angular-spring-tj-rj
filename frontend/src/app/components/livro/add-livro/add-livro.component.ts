@@ -71,7 +71,7 @@ export class AddLivroComponent implements OnInit {
     this.livroService.create(data).subscribe({
       next: (res) => {
         console.log(res);
-        this.message = 'Livro criado com sucesso!';
+        this.message = '';
         this.submitted = true;
       },
       error: (e) => console.error(e),
