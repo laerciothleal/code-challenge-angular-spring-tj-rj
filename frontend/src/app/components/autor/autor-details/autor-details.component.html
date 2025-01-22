@@ -10,7 +10,7 @@
     <label><strong>Nome: </strong></label> {{ currentAutor.nome }}
   </div>
 
-  <a class="btn badge-warning" routerLink="/autor/{{currentAutor.codau}}">
+  <a class="btn btn btn-info" routerLink="/autor/{{currentAutor.codau}}">
   Atualizar
   </a>
 
@@ -50,7 +50,7 @@
     <button type="button" class="btn btn-danger mr-2" (click)="deleteAutor()">Deletar</button>
 
     <a type="submit"
-      class="btn badge-warning"
+      class="btn btn-info"
       (click)="updateAutor()">
       Atualizar
     </a>

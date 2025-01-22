@@ -20,7 +20,7 @@
     <label><strong>Valor: </strong></label> {{ currentLivro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
   </div>
 
-  <a class="btn badge-warning" routerLink="/livro/{{currentLivro.codL}}">
+  <a class="btn btn btn-info" routerLink="/livro/{{currentLivro.codL}}">
     Atualizar
   </a>
   } @else {
