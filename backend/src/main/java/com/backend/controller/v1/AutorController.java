@@ -1,7 +1,7 @@
-package com.backend.controller;
+package com.backend.controller.v1;
 
-import com.backend.controller.request.AutorRequest;
-import com.backend.controller.response.AutorResponse;
+import com.backend.controller.v1.request.AutorRequest;
+import com.backend.controller.v1.response.AutorResponse;
 import com.backend.model.Autor;
 import com.backend.model.Livro;
 import com.backend.service.AutorService;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/autor")
+@RequestMapping("/api/v1/autores")
 @Tag(name = "Autor Controller", description = "API para gerenciamento de autores")
 public class AutorController {
 
@@ -47,7 +47,7 @@ public class AutorController {
             @ApiResponse(responseCode = "200", description = "Autor atualizado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class))),
             @ApiResponse(responseCode = "404", description = "Autor não encontrado"), @ApiResponse(responseCode = "500", description = "Erro no servidor")})
     @PatchMapping("/{id}")
-    public ResponseEntity<Autor> patch(@Parameter(description = "Id do livro") @PathVariable Integer id,@Valid @RequestBody AutorRequest livroRequest) {
+    public ResponseEntity<Autor> patch(@Parameter(description = "Id do livro") @PathVariable Integer id, @Valid @RequestBody AutorRequest livroRequest) {
         Autor livro = autorService.update(id, livroRequest);
         return new ResponseEntity(livro, HttpStatus.OK);
 

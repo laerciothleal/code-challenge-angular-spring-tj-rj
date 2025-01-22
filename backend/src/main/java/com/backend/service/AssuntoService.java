@@ -1,6 +1,6 @@
 package com.backend.service;
 
-import com.backend.controller.request.AssuntoRequest;
+import com.backend.controller.v1.request.AssuntoRequest;
 import com.backend.exception.ObjectNotFoundException;
 import com.backend.mappper.AssuntoMapper;
 import com.backend.model.Assunto;

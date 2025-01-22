@@ -1,7 +1,7 @@
-package com.backend.controller;
+package com.backend.controller.v1;
 
-import com.backend.controller.request.AssuntoRequest;
-import com.backend.controller.response.AssuntoResponse;
+import com.backend.controller.v1.request.AssuntoRequest;
+import com.backend.controller.v1.response.AssuntoResponse;
 import com.backend.model.Assunto;
 import com.backend.model.Livro;
 import com.backend.service.AssuntoService;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/assunto")
+@RequestMapping("/api/v1/assuntos")
 @Tag(name = "Assunto Controller", description = "API para gerenciamento de assuntos")
 @RequiredArgsConstructor
 public class AssuntoController {

@@ -1,6 +1,6 @@
 package com.backend.config;
 
-import com.backend.controller.response.ApiErrorResponse;
+import com.backend.controller.v1.response.ApiErrorResponse;
 import com.backend.exception.ObjectNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;

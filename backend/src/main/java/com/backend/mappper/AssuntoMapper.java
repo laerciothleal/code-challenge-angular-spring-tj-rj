@@ -1,6 +1,6 @@
 package com.backend.mappper;
 
-import com.backend.controller.request.AssuntoRequest;
+import com.backend.controller.v1.request.AssuntoRequest;
 import com.backend.model.Assunto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;

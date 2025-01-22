@@ -1,6 +1,6 @@
 package com.backend.mappper;
 
-import com.backend.controller.request.AutorRequest;
+import com.backend.controller.v1.request.AutorRequest;
 import com.backend.model.Autor;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;

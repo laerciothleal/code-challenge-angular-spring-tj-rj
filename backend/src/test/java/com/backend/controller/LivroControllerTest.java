@@ -1,5 +1,6 @@
 package com.backend.controller;
 
+import com.backend.controller.v1.LivroController;
 import com.backend.model.Livro;
 import com.backend.service.LivroService;
 import org.junit.jupiter.api.BeforeEach;

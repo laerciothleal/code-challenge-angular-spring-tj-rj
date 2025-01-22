@@ -1,6 +1,7 @@
 package com.backend.controller;
 
-import com.backend.controller.request.AssuntoRequest;
+import com.backend.controller.v1.AssuntoController;
+import com.backend.controller.v1.request.AssuntoRequest;
 import com.backend.model.Assunto;
 import com.backend.service.AssuntoService;
 import org.junit.jupiter.api.BeforeEach;

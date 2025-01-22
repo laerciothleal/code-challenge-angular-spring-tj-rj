@@ -1,4 +1,4 @@
-package com.backend.controller.request;
+package com.backend.controller.v1.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

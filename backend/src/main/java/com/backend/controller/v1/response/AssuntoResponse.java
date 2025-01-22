@@ -1,4 +1,4 @@
-package com.backend.controller.response;
+package com.backend.controller.v1.response;
 
 public record AssuntoResponse(
 

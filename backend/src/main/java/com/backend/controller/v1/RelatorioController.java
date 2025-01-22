@@ -1,6 +1,6 @@
-package com.backend.controller;
+package com.backend.controller.v1;
 
-import com.backend.controller.response.RelatorioResponse;
+import com.backend.controller.v1.response.RelatorioResponse;
 import com.backend.service.RelatorioService;
 import com.backend.view.LivroAutorViewResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/relatorio")
+@RequestMapping("/api/v1/relatorios")
 @Tag(name = "Relatório Controller", description = "API para buscar informções do relatório")
 @RequiredArgsConstructor
 public class RelatorioController {

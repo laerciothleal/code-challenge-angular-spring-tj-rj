@@ -1,6 +1,6 @@
 package com.backend.service;
 
-import com.backend.controller.request.AutorRequest;
+import com.backend.controller.v1.request.AutorRequest;
 import com.backend.exception.ObjectNotFoundException;
 import com.backend.mappper.AutorMapper;
 import com.backend.model.Autor;

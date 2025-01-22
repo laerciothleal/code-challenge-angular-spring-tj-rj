@@ -1,6 +1,6 @@
 package com.backend.service;
 
-import com.backend.controller.request.LivroRequest;
+import com.backend.controller.v1.request.LivroRequest;
 import com.backend.exception.ObjectNotFoundException;
 import com.backend.mappper.LivroMapper;
 import com.backend.model.*;

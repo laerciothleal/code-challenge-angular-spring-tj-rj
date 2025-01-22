@@ -1,9 +1,9 @@
-package com.backend.controller;
+package com.backend.controller.v1;
 
-import com.backend.controller.request.LivroRequest;
-import com.backend.controller.response.AssuntoResponse;
-import com.backend.controller.response.AutorResponse;
-import com.backend.controller.response.LivroResponse;
+import com.backend.controller.v1.request.LivroRequest;
+import com.backend.controller.v1.response.AssuntoResponse;
+import com.backend.controller.v1.response.AutorResponse;
+import com.backend.controller.v1.response.LivroResponse;
 import com.backend.mappper.LivroMapper;
 import com.backend.model.Livro;
 import com.backend.service.LivroService;
@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/livro")
+@RequestMapping("/api/v1/livros")
 @Tag(name = "Livro Controller", description = "API para gerenciamento de livros")
 @RequiredArgsConstructor
 public class LivroController {

@@ -1,6 +1,6 @@
 package com.backend.mappper;
 
-import com.backend.controller.request.LivroRequest;
+import com.backend.controller.v1.request.LivroRequest;
 import com.backend.model.Livro;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
