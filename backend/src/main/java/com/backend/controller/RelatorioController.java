@@ -2,6 +2,7 @@ package com.backend.controller;
 
 import com.backend.controller.response.RelatorioResponse;
 import com.backend.service.RelatorioService;
+import com.backend.view.LivroAutorViewResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,8 +31,7 @@ public class RelatorioController {
             @ApiResponse(responseCode = "500", description = "Erro no servidor")
     })
     @GetMapping("/livros-por-autor")
-    public ResponseEntity<List<RelatorioResponse>> getLivrosPorAutor() {
-        List<RelatorioResponse> relatorio = relatorioService.getLivrosPorAutor();
-        return ResponseEntity.ok(relatorio);
+    public ResponseEntity<List<LivroAutorViewResponse>> getLivrosPorAutor() {
+        return ResponseEntity.ok(relatorioService.getLivrosPorAutor());
     }
 }
