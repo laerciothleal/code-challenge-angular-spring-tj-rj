@@ -35,14 +35,16 @@
 
         <div class="form-group">
           <label for="edicao">Edição</label>
-          <input
-            type="number"
-            class="form-control"
-            id="edicao"
-            required
-            [(ngModel)]="livro.edicao"
-            name="edicao"
-          />
+            <input
+              type="number"
+              class="form-control"
+              id="edicao"
+              required
+              [(ngModel)]="livro.edicao"
+              name="edicao"
+              min="1"
+              max="99"
+            />
         </div>
 
         <div class="form-group">
@@ -54,7 +56,8 @@
             required
             [(ngModel)]="livro.anoPublicacao"
             name="anoPublicacao"
-            maxlength="4"
+            min="1"
+            max="99"
           />
         </div>
 
