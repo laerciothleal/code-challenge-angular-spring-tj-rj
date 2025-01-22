@@ -88,3 +88,13 @@ thead[_ngcontent-ng-c2394302268] th[_ngcontent-ng-c2394302268] {
   font-weight: bold; /* Mantém o negrito */
   color: white; /* Mantém o texto branco */
 }
+
+.container {
+  margin-top: 20px;
+}
+
+.text-center {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}

@@ -15,7 +15,7 @@ JOIN
     livro l ON la.codl = l.codl
 LEFT JOIN
     livro_assunto las ON l.codl = las.codl
-left join
+LEFT JOIN
     assunto asn ON las.codas = asn.codas
 GROUP BY
     a.nome, l.titulo, l.editora, l.edicao, l.ano_publicacao, l.valor;
