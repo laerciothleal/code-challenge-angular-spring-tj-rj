@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LivroService {
-  private baseUrl = 'http://localhost:8080/api/livro';
+  private baseUrl = 'http://localhost:8080/api/v1/livros';
 
   constructor(private http: HttpClient) {}
 

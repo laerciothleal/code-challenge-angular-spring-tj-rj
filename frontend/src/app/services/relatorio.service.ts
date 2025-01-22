@@ -16,7 +16,7 @@ export interface Relatorio {
   providedIn: 'root',
 })
 export class RelatorioService {
-  private baseUrl = 'http://localhost:8080/api/relatorio';
+  private baseUrl = 'http://localhost:8080/api/v1/relatorios';
 
   constructor(private http: HttpClient) {}
 

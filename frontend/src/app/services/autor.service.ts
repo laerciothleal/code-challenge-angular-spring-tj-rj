@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AutorService {
-  private baseUrl = 'http://localhost:8080/api/autor';
+  private baseUrl = 'http://localhost:8080/api/v1/utores';
 
   constructor(private http: HttpClient) {}
 
