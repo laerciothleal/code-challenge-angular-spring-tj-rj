@@ -3,7 +3,7 @@ package com.backend.controller.v1.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record AutorRequest(
+public record CreateAutorRequest(
         @NotBlank(message = "O nome do autor não pode ser vazio ou nulo.")
         @Size(max = 40, message = "O nome do autor não pode ter mais de 40 caracteres.")
         String nome

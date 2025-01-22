@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record LivroRequest(
+public record CreateLivroRequest(
         @NotBlank(message = "O título não pode ser vazio ou nulo.")
         String titulo,
 
@@ -26,8 +26,10 @@ public record LivroRequest(
         @NotNull(message = "O valor não pode ser nulo.")
         @Min(value = 0, message = "O valor deve ser maior ou igual a zero.")
         BigDecimal valor,
+
         @NotNull(message = "O valor não pode ser nulo.")
         List<Integer> autoresIds,  // IDs dos autores associados
+
         @NotNull(message = "O valor não pode ser nulo.")
         List<Integer> assuntosIds // IDs dos assuntos associados
 ) {
