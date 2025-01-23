@@ -35,7 +35,7 @@ Ele demonstra como consumir APIs REST, exibir dados e realizar várias operaçõ
 - Relatório de livros por Autor
 
 ### Executar apenas o backend, caso deseje
-`mvn spring-boot:run`. Usar o link `http://localhost:8081/livro`
+`mvn spring-boot:run`. Usar o link `http://localhost:8081/autor`
 
 ### Swagger
 Acessar a URL `http://localhost:8080/swagger-ui/index.html`
