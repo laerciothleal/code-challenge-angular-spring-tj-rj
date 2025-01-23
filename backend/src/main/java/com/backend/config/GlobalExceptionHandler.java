@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -179,6 +180,15 @@ public class GlobalExceptionHandler {
     public ApiErrorResponse handleGenericRepositoryException(RuntimeException e) {
         log.error("Internal exception", e);
         return buildApiInternalError(new RuntimeException(e), INTERNAL_SERVER_ERROR);
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseBody
+    public ApiErrorResponse handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.error("Data integrity violation", e);
+        String message = "Não foi possível excluir o recurso porque ele está associado a outro registro.";
+        return buildApiError("Violação de integridade referencial", List.of(message), BAD_REQUEST);
     }
 
     private ApiErrorResponse buildApiError(String message, Collection<String> validationErrors, HttpStatus httpStatus) {
