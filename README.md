@@ -9,7 +9,7 @@ docker-compose up --build
 
 #### Spring Boot vai usar a porta `8080` e o Angular a porta `8081`.
 
-frontend `http://localhost:8081/livro`
+frontend `http://localhost:8081/autor`
 
 backend `http://localhost:8080/swagger-ui/index.html`
 
