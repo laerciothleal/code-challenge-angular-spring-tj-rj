@@ -72,9 +72,14 @@
       Atualizar
     </button>
 
-    <a href="/assunto" class="btn btn-dark margin-button-left">Assunto</a>
+    <a href="/assunto" class="btn btn-dark margin-button-left">Voltar</a>
 
     <p>{{ message }}</p>
+
+    <div *ngIf="errorMessage" class="tooltip-error">
+      {{ errorMessage }}
+    </div>
+
   </div>
   } @else {
   <p>Cannot access this Assunto...</p>

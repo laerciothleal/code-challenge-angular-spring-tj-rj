@@ -9,6 +9,9 @@ import { AssuntoService } from '../../../services/assunto.service';
   styleUrls: ['./assunto-details.component.css'],
 })
 export class AssuntoDetailsComponent implements OnInit {
+
+  errorMessage: string | null = null;
+
   @Input() viewMode = false;
 
   @Input() currentAssunto: Assunto = {
@@ -63,14 +66,18 @@ export class AssuntoDetailsComponent implements OnInit {
   
 
   deleteAssunto(): void {
-    this.assuntoService
-    .delete(this.currentAssunto.codas).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.router.navigate(['/assunto']);
+    this.assuntoService.delete(this.currentAssunto.codas).subscribe({
+      next: () => {
+        this.errorMessage = null;
       },
-      error: (e) => console.error(e)
+      error: (err) => {
+        this.errorMessage = err.error?.validationErrors[0] || 'Erro ao excluir o assunto.';
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 6000);
+      }
     });
   }
+
 
 }

@@ -9,6 +9,9 @@ import { AutorService } from '../../../services/autor.service';
   styleUrls: ['./autor-details.component.css'],
 })
 export class AutorDetailsComponent implements OnInit {
+
+  errorMessage: string | null = null;
+
   @Input() viewMode = false;
 
   @Input() currentAutor: Autor = {
@@ -59,15 +62,19 @@ export class AutorDetailsComponent implements OnInit {
   }
   
 
-  deleteAutor(): void {
-    this.autorService
-    .delete(this.currentAutor.codau).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.router.navigate(['/autor']);
-      },
-      error: (e) => console.error(e)
-    });
-  }
+ deleteAutor(): void {
+  this.autorService.delete(this.currentAutor.codau).subscribe({
+    next: () => {
+      this.errorMessage = null; 
+    },
+    error: (err) => {
+      // Set the error message and display the tooltip
+      this.errorMessage = err.error?.validationErrors?.[0] || 'Erro ao excluir o autor.';
+      setTimeout(() => {
+        this.errorMessage = null; 
+      }, 6000);
+    }
+  });
+}
 
 }

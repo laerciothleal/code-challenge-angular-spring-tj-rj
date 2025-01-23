@@ -190,12 +190,22 @@
         </div>
 
         <!-- Botões -->
+        <button 
+          type="button" 
+          class="btn btn-danger mr-2" 
+          (click)="deleteLivro()">
+          Deletar
+        </button>
+
         <button
           class="btn btn-info"
           (click)="updateLivro()"
           [disabled]="livroForm.invalid">
           Atualizar
         </button>
+
+        
+
         <a href="/livro" class="btn btn-dark margin-button-left">Voltar</a>
         <p>{{ message }}</p>
       </form>
