@@ -1,199 +1,204 @@
-<div>
-  <h4 *ngIf="viewMode && currentLivro.codL">Livro</h4>
-  
-  <div *ngIf="viewMode && currentLivro.codL">
+@if (viewMode) {
+  @if (currentLivro.codL) {
     <div>
-      <label><strong>Id: </strong></label> {{ currentLivro.codL }}
-    </div>
-    <div>
-      <label><strong>Título: </strong></label> {{ currentLivro.titulo }}
-    </div>
-    <div>
-      <label><strong>Editora: </strong></label> {{ currentLivro.editora }}
-    </div>
-    <div>
-      <label><strong>Edição: </strong></label> {{ currentLivro.edicao }}
-    </div>
-    <div>
-      <label><strong>Ano Publicação: </strong></label> {{ currentLivro.anoPublicacao }}
-    </div>
-    <div>
-      <label><strong>Valor: </strong></label> {{ currentLivro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-    </div>
-
-    <a class="btn btn-info" routerLink="/livro/{{currentLivro.codL}}">
-      Atualizar
-    </a>
-  </div>
-
-  <div *ngIf="!viewMode && currentLivro.codL" class="edit-form">
-    <h4>Editar Livro</h4>
-    <form #livroForm="ngForm">
-
-      <!-- Campo ID -->
-      <div class="form-group">
-        <label for="id">Id</label>
-        <input
-          type="text"
-          class="form-control"
-          id="id"
-          readonly
-          [(ngModel)]="currentLivro.codL"
-          name="id"
-        />
+      <h4>Livro</h4>
+      <div>
+        <label><strong>Id: </strong></label> {{ currentLivro.codL }}
       </div>
-
-      <!-- Campo Título -->
-      <div class="form-group">
-        <label for="titulo">Título</label>
-        <input
-          type="text"
-          class="form-control"
-          id="titulo"
-          required
-          minlength="5"
-          maxlength="40"
-          [(ngModel)]="currentLivro.titulo"
-          name="titulo"
-          #titulo="ngModel"
-        />
-        <div *ngIf="titulo.touched && titulo.invalid" class="text-danger">
-          <small *ngIf="titulo.errors?.['required']">O campo Título é obrigatório.</small>
-          <small *ngIf="titulo.errors?.['minlength']">O Título deve ter pelo menos 5 caracteres.</small>
-          <small *ngIf="titulo.errors?.['maxlength']">O Título deve ter no máximo 40 caracteres.</small>
-        </div>
+      <div>
+        <label><strong>Título: </strong></label> {{ currentLivro.titulo }}
       </div>
-
-      <!-- Campo Editora -->
-      <div class="form-group">
-        <label for="editora">Editora</label>
-        <input
-          type="text"
-          class="form-control"
-          id="editora"
-          required
-          minlength="5"
-          maxlength="40"
-          [(ngModel)]="currentLivro.editora"
-          name="editora"
-          #editora="ngModel"
-        />
-        <div *ngIf="editora.touched && editora.invalid" class="text-danger">
-          <small *ngIf="editora.errors?.['required']">O campo Editora é obrigatório.</small>
-          <small *ngIf="editora.errors?.['minlength']">A Editora deve ter pelo menos 5 caracteres.</small>
-          <small *ngIf="editora.errors?.['maxlength']">A Editora deve ter no máximo 40 caracteres.</small>
-        </div>
+      <div>
+        <label><strong>Editora: </strong></label> {{ currentLivro.editora }}
       </div>
-
-      <!-- Campo Edição -->
-      <div class="form-group">
-        <label for="edicao">Edição</label>
-        <input
-          type="number"
-          class="form-control"
-          id="edicao"
-          required
-          min="1"
-          max="99"
-          [(ngModel)]="currentLivro.edicao"
-          name="edicao"
-          #edicao="ngModel"
-        />
-        <div *ngIf="edicao.touched && edicao.invalid" class="text-danger">
-          <small *ngIf="edicao.errors?.['required']">O campo Edição é obrigatório.</small>
-          <small *ngIf="edicao.errors?.['min']">A Edição deve ser no mínimo 1.</small>
-          <small *ngIf="edicao.errors?.['max']">A Edição deve ser no máximo 99.</small>
-        </div>
+      <div>
+        <label><strong>Edição: </strong></label> {{ currentLivro.edicao }}
       </div>
-
-      <!-- Campo Ano Publicação -->
-      <div class="form-group">
-        <label for="anoPublicacao">Ano Publicação</label>
-        <input
-          type="number"
-          class="form-control"
-          id="anoPublicacao"
-          required
-          min="1800"
-          max="2050"
-          [(ngModel)]="currentLivro.anoPublicacao"
-          name="anoPublicacao"
-          #anoPublicacao="ngModel"
-        />
-        <div *ngIf="anoPublicacao.touched && anoPublicacao.invalid" class="text-danger">
-          <small *ngIf="anoPublicacao.errors?.['required']">O campo Ano Publicação é obrigatório.</small>
-          <small *ngIf="anoPublicacao.errors?.['min']">O Ano deve ser no mínimo 1800.</small>
-          <small *ngIf="anoPublicacao.errors?.['max']">O Ano deve ser no máximo 2050.</small>
-        </div>
+      <div>
+        <label><strong>Ano Publicação: </strong></label> {{ currentLivro.anoPublicacao }}
       </div>
-
-      <!-- Campo Valor -->
-      <div class="form-group">
-        <label for="valor">Valor</label>
-        <input
-          type="text"
-          class="form-control"
-          id="valor"
-          required
-          [(ngModel)]="currentLivro.valor"
-          name="valor"
-          pattern="^\d{1,7}(\.\d{0,2})?$"
-          maxlength="12"
-          #valor="ngModel"
-        />
-        <div *ngIf="valor.touched && valor.invalid" class="text-danger">
-          <small *ngIf="valor.errors?.['required']">O campo Valor é obrigatório.</small>
-          <small *ngIf="valor.errors?.['pattern']">O Valor deve estar no formato correto (ex.: 9999,99).</small>
-        </div>
+      <div>
+        <label><strong>Valor: </strong></label> {{ currentLivro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
       </div>
-
-      <div class="form-group">
-        <label for="autores">Autores:</label>
-        <select
-          multiple
-          [(ngModel)]="livroRequest.autoresIds"
-          name="autores"
-          class="form-control"
-          required
-        >
-          <option
-            *ngFor="let autor of autores || []"
-            [value]="autor.codau"
-            [selected]="livroRequest.autoresIds.includes(autor.codau)"
-          >
-            {{ autor.nome }}
-          </option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="assuntos">Assuntos:</label>
-        <select
-          multiple
-          [(ngModel)]="livroRequest.assuntosIds"
-          name="assuntos"
-          class="form-control"
-          required
-        >
-          <option
-            *ngFor="let assunto of assuntos || []"
-            [value]="assunto.codas"
-            [selected]="livroRequest.assuntosIds.includes(assunto.codas)"
-          >
-            {{ assunto.descricao }}
-          </option>
-        </select>
-      </div>
-
-      <button
-        class="btn btn-info"
-        (click)="updateLivro()"
-        [disabled]="livroForm.invalid">
+      <a class="btn btn-info" routerLink="/livro/{{ currentLivro.codL }}">
         Atualizar
-      </button>
+      </a>
+    </div>
+  } @else {
+    <p>Selecione um item da lista para edição!</p>
+  }
+} @else {
+  @if (currentLivro.codL) {
+    <div class="edit-form">
+      <h4>Editar Livro</h4>
+      <form #livroForm="ngForm">
+        <!-- Campo ID -->
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            id="id"
+            readonly
+            [(ngModel)]="currentLivro.codL"
+            name="id"
+          />
+        </div>
 
-      <a href="/livro" class="btn btn-dark margin-button-left">Voltar</a>
-      <p>{{ message }}</p>
-    </form>
-  </div>
-</div>
+        <!-- Campo Título -->
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="titulo"
+            required
+            minlength="5"
+            maxlength="40"
+            [(ngModel)]="currentLivro.titulo"
+            name="titulo"
+            #titulo="ngModel"
+          />
+          <div *ngIf="titulo.touched && titulo.invalid" class="text-danger">
+            <small *ngIf="titulo.errors?.['required']">O campo Título é obrigatório.</small>
+            <small *ngIf="titulo.errors?.['minlength']">O Título deve ter pelo menos 5 caracteres.</small>
+            <small *ngIf="titulo.errors?.['maxlength']">O Título deve ter no máximo 40 caracteres.</small>
+          </div>
+        </div>
+
+        <!-- Campo Editora -->
+        <div class="form-group">
+          <label for="editora">Editora</label>
+          <input
+            type="text"
+            class="form-control"
+            id="editora"
+            required
+            minlength="5"
+            maxlength="40"
+            [(ngModel)]="currentLivro.editora"
+            name="editora"
+            #editora="ngModel"
+          />
+          <div *ngIf="editora.touched && editora.invalid" class="text-danger">
+            <small *ngIf="editora.errors?.['required']">O campo Editora é obrigatório.</small>
+            <small *ngIf="editora.errors?.['minlength']">A Editora deve ter pelo menos 5 caracteres.</small>
+            <small *ngIf="editora.errors?.['maxlength']">A Editora deve ter no máximo 40 caracteres.</small>
+          </div>
+        </div>
+
+        <!-- Campo Edição -->
+        <div class="form-group">
+          <label for="edicao">Edição</label>
+          <input
+            type="number"
+            class="form-control"
+            id="edicao"
+            required
+            min="1"
+            max="99"
+            [(ngModel)]="currentLivro.edicao"
+            name="edicao"
+            #edicao="ngModel"
+          />
+          <div *ngIf="edicao.touched && edicao.invalid" class="text-danger">
+            <small *ngIf="edicao.errors?.['required']">O campo Edição é obrigatório.</small>
+            <small *ngIf="edicao.errors?.['min']">A Edição deve ser no mínimo 1.</small>
+            <small *ngIf="edicao.errors?.['max']">A Edição deve ser no máximo 99.</small>
+          </div>
+        </div>
+
+        <!-- Campo Ano Publicação -->
+        <div class="form-group">
+          <label for="anoPublicacao">Ano Publicação</label>
+          <input
+            type="number"
+            class="form-control"
+            id="anoPublicacao"
+            required
+            min="1800"
+            max="2050"
+            [(ngModel)]="currentLivro.anoPublicacao"
+            name="anoPublicacao"
+            #anoPublicacao="ngModel"
+          />
+          <div *ngIf="anoPublicacao.touched && anoPublicacao.invalid" class="text-danger">
+            <small *ngIf="anoPublicacao.errors?.['required']">O campo Ano Publicação é obrigatório.</small>
+            <small *ngIf="anoPublicacao.errors?.['min']">O Ano deve ser no mínimo 1800.</small>
+            <small *ngIf="anoPublicacao.errors?.['max']">O Ano deve ser no máximo 2050.</small>
+          </div>
+        </div>
+
+        <!-- Campo Valor -->
+        <div class="form-group">
+          <label for="valor">Valor</label>
+          <input
+            type="text"
+            class="form-control"
+            id="valor"
+            required
+            [(ngModel)]="currentLivro.valor"
+            name="valor"
+            pattern="^\d{1,7}(\.\d{0,2})?$"
+            maxlength="12"
+            #valor="ngModel"
+          />
+          <div *ngIf="valor.touched && valor.invalid" class="text-danger">
+            <small *ngIf="valor.errors?.['required']">O campo Valor é obrigatório.</small>
+            <small *ngIf="valor.errors?.['pattern']">O Valor deve estar no formato correto (ex.: 9999,99).</small>
+          </div>
+        </div>
+
+        <!-- Select Autores -->
+        <div class="form-group">
+          <label for="autores">Autores:</label>
+          <select
+            multiple
+            [(ngModel)]="livroRequest.autoresIds"
+            name="autores"
+            class="form-control"
+            required
+          >
+            <option
+              *ngFor="let autor of autores || []"
+              [value]="autor.codau"
+              [selected]="livroRequest.autoresIds.includes(autor.codau)"
+            >
+              {{ autor.nome }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Select Assuntos -->
+        <div class="form-group">
+          <label for="assuntos">Assuntos:</label>
+          <select
+            multiple
+            [(ngModel)]="livroRequest.assuntosIds"
+            name="assuntos"
+            class="form-control"
+            required
+          >
+            <option
+              *ngFor="let assunto of assuntos || []"
+              [value]="assunto.codas"
+              [selected]="livroRequest.assuntosIds.includes(assunto.codas)"
+            >
+              {{ assunto.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Botões -->
+        <button
+          class="btn btn-info"
+          (click)="updateLivro()"
+          [disabled]="livroForm.invalid">
+          Atualizar
+        </button>
+        <a href="/livro" class="btn btn-dark margin-button-left">Voltar</a>
+        <p>{{ message }}</p>
+      </form>
+    </div>
+  } @else {<p>Cannot access this Livro...</p>}
+}
