@@ -69,6 +69,7 @@ export class AssuntoDetailsComponent implements OnInit {
     this.assuntoService.delete(this.currentAssunto.codas).subscribe({
       next: () => {
         this.errorMessage = null;
+        this.router.navigate(['/assunto']);
       },
       error: (err) => {
         this.errorMessage = err.error?.validationErrors[0] || 'Erro ao excluir o assunto.';

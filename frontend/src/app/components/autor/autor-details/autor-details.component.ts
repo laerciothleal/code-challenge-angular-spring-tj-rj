@@ -66,6 +66,7 @@ export class AutorDetailsComponent implements OnInit {
   this.autorService.delete(this.currentAutor.codau).subscribe({
     next: () => {
       this.errorMessage = null; 
+      this.router.navigate(['/autor']);
     },
     error: (err) => {
       // Set the error message and display the tooltip
