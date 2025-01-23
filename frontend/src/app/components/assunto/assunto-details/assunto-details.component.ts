@@ -42,6 +42,11 @@ export class AssuntoDetailsComponent implements OnInit {
   }
 
   updateAssunto(): void {
+    if (!this.currentAssunto.descricao || this.currentAssunto.descricao.trim().length === 0) {
+      this.message = 'Por favor, preencha o campo Descrição corretamente.';
+      return;
+    }
+  
     this.message = '';
     this.assuntoService
       .update(this.currentAssunto.codas, this.currentAssunto)
@@ -52,9 +57,10 @@ export class AssuntoDetailsComponent implements OnInit {
             ? res.message
             : 'Assunto atualizado com sucesso!';
         },
-        error: (e) => console.error(e)
+        error: (e) => console.error(e),
       });
   }
+  
 
   deleteAssunto(): void {
     this.assuntoService

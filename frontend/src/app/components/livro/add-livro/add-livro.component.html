@@ -1,12 +1,12 @@
 <div>
   <div class="submit-form">
-    <form>
-      
+    <form #livroForm="ngForm">
       <div *ngIf="!submitted">
         <div>
           <h4>Livro</h4>
         </div>
 
+        <!-- Campo Título -->
         <div class="form-group">
           <label for="titulo">Título</label>
           <input
@@ -14,12 +14,20 @@
             class="form-control"
             id="titulo"
             required
+            minlength="4"
+            maxlength="40"
             [(ngModel)]="livro.titulo"
             name="titulo"
-            maxlength="40"
+            #titulo="ngModel"
           />
+          <div *ngIf="titulo.touched && titulo.invalid" class="text-danger">
+            <small *ngIf="titulo.errors?.['required']">O campo Título é obrigatório.</small>
+            <small *ngIf="titulo.errors?.['minlength']">O Título deve ter pelo menos 4 caracteres.</small>
+            <small *ngIf="titulo.errors?.['maxlength']">O Título deve ter no máximo 40 caracteres.</small>
+          </div>
         </div>
 
+        <!-- Campo Editora -->
         <div class="form-group">
           <label for="editora">Editora</label>
           <input
@@ -27,26 +35,41 @@
             class="form-control"
             id="editora"
             required
+            minlength="5"
+            maxlength="40"
             [(ngModel)]="livro.editora"
             name="editora"
-            maxlength="40"
+            #editora="ngModel"
           />
+          <div *ngIf="editora.touched && editora.invalid" class="text-danger">
+            <small *ngIf="editora.errors?.['required']">O campo Editora é obrigatório.</small>
+            <small *ngIf="editora.errors?.['minlength']">A Editora deve ter pelo menos 5 caracteres.</small>
+            <small *ngIf="editora.errors?.['maxlength']">A Editora deve ter no máximo 40 caracteres.</small>
+          </div>
         </div>
 
+        <!-- Campo Edição -->
         <div class="form-group">
           <label for="edicao">Edição</label>
-            <input
-              type="number"
-              class="form-control"
-              id="edicao"
-              required
-              [(ngModel)]="livro.edicao"
-              name="edicao"
-              min="1"
-              max="99"
-            />
+          <input
+            type="number"
+            class="form-control"
+            id="edicao"
+            required
+            min="1"
+            max="99"
+            [(ngModel)]="livro.edicao"
+            name="edicao"
+            #edicao="ngModel"
+          />
+          <div *ngIf="edicao.touched && edicao.invalid" class="text-danger">
+            <small *ngIf="edicao.errors?.['required']">O campo Edição é obrigatório.</small>
+            <small *ngIf="edicao.errors?.['min']">A Edição deve ser no mínimo 1.</small>
+            <small *ngIf="edicao.errors?.['max']">A Edição deve ser no máximo 99.</small>
+          </div>
         </div>
 
+        <!-- Campo Ano Publicação -->
         <div class="form-group">
           <label for="anoPublicacao">Ano Publicação</label>
           <input
@@ -54,13 +77,20 @@
             class="form-control"
             id="anoPublicacao"
             required
+            min="1800"
+            max="2050"
             [(ngModel)]="livro.anoPublicacao"
             name="anoPublicacao"
-            min="1"
-            max="99"
+            #anoPublicacao="ngModel"
           />
+          <div *ngIf="anoPublicacao.touched && anoPublicacao.invalid" class="text-danger">
+            <small *ngIf="anoPublicacao.errors?.['required']">O campo Ano Publicação é obrigatório.</small>
+            <small *ngIf="anoPublicacao.errors?.['min']">O Ano deve ser no mínimo 1800.</small>
+            <small *ngIf="anoPublicacao.errors?.['max']">O Ano deve ser no máximo 2050.</small>
+          </div>
         </div>
 
+        <!-- Campo Valor -->
         <div class="form-group">
           <label for="valor">Valor</label>
           <input
@@ -77,40 +107,54 @@
             [dropSpecialCharacters]="true"
             pattern="^\d{1,7}(\.\d{0,2})?$"
             maxlength="12"
-            title="O valor deve estar no formato válido (máximo 10 dígitos com 2 decimais)"
+            #valor="ngModel"
           />
+          <div *ngIf="valor.touched && valor.invalid" class="text-danger">
+            <small *ngIf="valor.errors?.['required']">O campo Valor é obrigatório.</small>
+            <small *ngIf="valor.errors?.['pattern']">O Valor deve estar no formato correto (ex.: 9999,99).</small>
+          </div>
         </div>
-        
 
+        <!-- Campo Autores -->
         <div class="form-group">
           <label for="autores">Autores:</label>
-          <select 
-            multiple 
-            [(ngModel)]="livroRequest.autoresIds" 
-            name="autores" 
-            class="form-control">
+          <select
+            multiple
+            [(ngModel)]="livroRequest.autoresIds"
+            name="autores"
+            class="form-control"
+          >
             <option *ngFor="let autor of autores" [value]="autor.codau">{{ autor.nome }}</option>
           </select>
         </div>
 
+        <!-- Campo Assuntos -->
         <div class="form-group">
           <label for="assuntos">Assuntos:</label>
-          <select 
-            multiple 
-            [(ngModel)]="livroRequest.assuntosIds" 
-            name="assuntos" 
-            class="form-control">
+          <select
+            multiple
+            [(ngModel)]="livroRequest.assuntosIds"
+            name="assuntos"
+            class="form-control"
+          >
             <option *ngFor="let assunto of assuntos" [value]="assunto.codas">{{ assunto.descricao }}</option>
           </select>
         </div>
 
-        <button (click)="saveLivro()" class="btn btn-success">Salvar</button>
+        <button 
+          (click)="saveLivro()" 
+          class="btn btn-success" 
+          [disabled]="livroForm.invalid">
+          Salvar
+        </button>
       </div>
+      
       <div *ngIf="submitted">
         <h4>Livro criado com sucesso!</h4>
         <button class="btn btn-primary" (click)="newLivro()">Adicionar</button>
         <a href="/livro" class="btn btn-dark margin-button-left">Livro</a>
       </div>
+      
       <p>{{ message }}</p>
     </form>
   </div>

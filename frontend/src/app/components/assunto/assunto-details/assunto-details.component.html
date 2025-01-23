@@ -1,5 +1,5 @@
-@if (viewMode){
-  @if (currentAssunto.codas){
+@if (viewMode) {
+  @if (currentAssunto.codas) {
   <h4>Assunto</h4>
 
   <div>
@@ -10,18 +10,17 @@
     <label><strong>Descrição: </strong></label> {{ currentAssunto.descricao }}
   </div>
 
-
   <a class="btn btn btn-info" routerLink="/assunto/{{ currentAssunto.codas }}">
-  Atualizar
+    Atualizar
   </a>
-  
-
-  } @else {<p>Selecione um item da lista para edição!</p>}
+  } @else {
+  <p>Selecione um item da lista para edição!</p>
+  }
 } @else {
   @if (currentAssunto.codas) {
   <div class="edit-form">
     <h4>Assunto</h4>
-    <form>
+    <form #assuntoForm="ngForm">
 
       <div class="form-group">
         <label for="id">Id:</label>
@@ -43,23 +42,41 @@
           id="descricao"
           [(ngModel)]="currentAssunto.descricao"
           name="descricao"
+          #descricao="ngModel"
+          required
           maxlength="20"
+          minlength="5"
         />
+        <!-- Mensagens de erro -->
+        <div *ngIf="descricao.touched && descricao.invalid" class="text-danger">
+          <small *ngIf="descricao.errors?.['required']">O campo Descrição é obrigatório.</small>
+          <small *ngIf="descricao.errors?.['minlength']">A Descrição deve ter pelo menos 5 caracteres.</small>
+          <small *ngIf="descricao.errors?.['maxlength']">A Descrição deve ter no máximo 20 caracteres.</small>
+        </div>
       </div>
   
     </form>
 
-    <button type="button" class="btn btn-danger mr-2" (click)="deleteAssunto()">Deletar</button>
+    <button 
+      type="button" 
+      class="btn btn-danger mr-2" 
+      (click)="deleteAssunto()">
+      Deletar
+    </button>
 
-
-    <a type="submit"
-      class="btn btn-info"
-      (click)="updateAssunto()">
+    <button 
+      type="submit" 
+      class="btn btn-info" 
+      (click)="updateAssunto()" 
+      [disabled]="descricao.invalid">
       Atualizar
-    </a>
+    </button>
+
     <a href="/assunto" class="btn btn-dark margin-button-left">Assunto</a>
 
     <p>{{ message }}</p>
   </div>
-  } @else {<p>Cannot access this Assunto...</p>}
+  } @else {
+  <p>Cannot access this Assunto...</p>
+  }
 }

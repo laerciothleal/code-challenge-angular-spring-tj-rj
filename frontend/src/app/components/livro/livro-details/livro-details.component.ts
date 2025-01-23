@@ -115,7 +115,16 @@ export class LivroDetailsComponent implements OnInit {
   }
 
   updateLivro(): void {
-    this.message = '';
+    if (!this.currentLivro.titulo || this.currentLivro.titulo.trim().length < 3) {
+      this.message = 'Por favor, preencha o campo Título corretamente.';
+      return;
+    }
+  
+    if (!this.currentLivro.editora || this.currentLivro.editora.trim().length < 3) {
+      this.message = 'Por favor, preencha o campo Editora corretamente.';
+      return;
+    }
+  
     const updatedLivro = {
       ...this.currentLivro,
       autoresIds: this.livroRequest.autoresIds,
@@ -130,6 +139,7 @@ export class LivroDetailsComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
+  
   
   deleteLivro(): void {
     this.livroService.delete(this.currentLivro.codL).subscribe({

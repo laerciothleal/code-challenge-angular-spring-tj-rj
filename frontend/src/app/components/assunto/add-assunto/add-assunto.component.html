@@ -1,7 +1,6 @@
 <div>
   <div class="submit-form">
-    <form>
-
+    <form #assuntoForm="ngForm">
       <div *ngIf="!submitted">
         <div>
           <h4>Assunto</h4>
@@ -14,14 +13,28 @@
             class="form-control"
             id="descricao"
             required
+            minlength="5"
+            maxlength="20"
             [(ngModel)]="assunto.descricao"
             name="descricao"
-            maxlength="20"
+            #descricao="ngModel"
           />
+          <!-- Mensagens de erro -->
+          <div *ngIf="descricao.touched && descricao.invalid" class="text-danger">
+            <small *ngIf="descricao.errors?.['required']">O campo Descrição é obrigatório.</small>
+            <small *ngIf="descricao.errors?.['minlength']">A Descrição deve ter pelo menos 5 caracteres.</small>
+            <small *ngIf="descricao.errors?.['maxlength']">A Descrição deve ter no máximo 20 caracteres.</small>
+          </div>
         </div>
 
-        <button (click)="saveAssunto()" class="btn btn-success">Salvar</button>
+        <button 
+          (click)="saveAssunto()" 
+          class="btn btn-success" 
+          [disabled]="assuntoForm.invalid">
+          Salvar
+        </button>
       </div>
+
       <div *ngIf="submitted">
         <h4>Assunto criado com sucesso!</h4>
         <button class="btn btn-primary" (click)="newAssunto()">Adicionar</button>

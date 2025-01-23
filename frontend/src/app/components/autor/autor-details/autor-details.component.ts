@@ -39,6 +39,11 @@ export class AutorDetailsComponent implements OnInit {
   }
 
   updateAutor(): void {
+    if (!this.currentAutor.nome || this.currentAutor.nome.trim().length === 0) {
+      this.message = 'Por favor, preencha o campo Nome corretamente.';
+      return;
+    }
+  
     this.message = '';
     this.autorService
       .update(this.currentAutor.codau, this.currentAutor)
@@ -49,9 +54,10 @@ export class AutorDetailsComponent implements OnInit {
             ? res.message
             : 'Autor atualizado com sucesso!';
         },
-        error: (e) => console.error(e)
+        error: (e) => console.error(e),
       });
   }
+  
 
   deleteAutor(): void {
     this.autorService

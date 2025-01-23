@@ -23,20 +23,25 @@ export class AddAssuntoComponent implements OnInit {
   }
 
   saveAssunto(): void {
-      const data = {
-        descricao: this.assunto.descricao
-      };
-
-      this.AssuntoService.create(data).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.message = '';
-          this.submitted = true;
-        },
-        error: (e) => console.error(e)
-      });
-
+    if (!this.assunto.descricao || this.assunto.descricao.trim().length < 3) {
+      this.message = 'Por favor, preencha o campo Descrição corretamente.';
+      return;
+    }
+  
+    const data = {
+      descricao: this.assunto.descricao.trim()
+    };
+  
+    this.AssuntoService.create(data).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.message = '';
+        this.submitted = true;
+      },
+      error: (e) => console.error(e)
+    });
   }
+  
 
 
   newAssunto(): void {

@@ -62,12 +62,22 @@ export class AddLivroComponent implements OnInit {
   }
 
   saveLivro(): void {
+    if (!this.livro.titulo || this.livro.titulo.trim().length < 3) {
+      this.message = 'Por favor, preencha o campo Título corretamente.';
+      return;
+    }
+  
+    if (!this.livro.editora || this.livro.editora.trim().length < 3) {
+      this.message = 'Por favor, preencha o campo Editora corretamente.';
+      return;
+    }
+  
     const data = {
       ...this.livro,
       autoresIds: this.livroRequest.autoresIds,
       assuntosIds: this.livroRequest.assuntosIds,
     };
-
+  
     this.livroService.create(data).subscribe({
       next: (res) => {
         console.log(res);
@@ -77,6 +87,7 @@ export class AddLivroComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
+  
 
   newLivro(): void {
     this.message = '';

@@ -1,6 +1,6 @@
 <div>
   <div class="submit-form">
-    <form>
+    <form #autorForm="ngForm">
       <div *ngIf="!submitted">
         <div>
           <h4>Autor</h4>
@@ -13,19 +13,31 @@
             class="form-control"
             id="nome"
             required
+            minlength="5"
+            maxlength="40"
             [(ngModel)]="autor.nome"
             name="nome"
-            maxlength="40"
+            #nome="ngModel"
           />
+          <!-- Mensagens de erro -->
+          <div *ngIf="nome.touched && nome.invalid" class="text-danger">
+            <small *ngIf="nome.errors?.['required']">O campo Nome é obrigatório.</small>
+            <small *ngIf="nome.errors?.['minlength']">O Nome deve ter pelo menos 5 caracteres.</small>
+            <small *ngIf="nome.errors?.['maxlength']">O Nome deve ter no máximo 40 caracteres.</small>
+          </div>
         </div>
 
-
-        <button (click)="saveAutor()" class="btn btn-success">Salvar</button>
+        <button 
+          (click)="saveAutor()" 
+          [disabled]="autorForm.invalid" 
+          class="btn btn-success">
+          Salvar
+        </button>
       </div>
+
       <div *ngIf="submitted">
         <h4>Autor criado com sucesso!</h4>
         <button class="btn btn-primary" (click)="newAutor()">Adicionar</button>
-
         <a href="/autor" class="btn btn-dark margin-button-left">Autor</a>
       </div>
       <p>{{ message }}</p>

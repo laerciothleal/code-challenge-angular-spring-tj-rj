@@ -23,20 +23,25 @@ export class AddAutorComponent implements OnInit {
   }
 
   saveAutor(): void {
-      const data = {
-        nome: this.autor.nome
-      };
-
-      this.AutorService.create(data).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.message = '';
-          this.submitted = true;
-        },
-        error: (e) => console.error(e)
-      });
-
+    if (!this.autor.nome || this.autor.nome.trim().length < 3) {
+      this.message = 'Por favor, preencha o campo Nome corretamente.';
+      return;
+    }
+  
+    const data = {
+      nome: this.autor.nome.trim() // Remove espaços em branco extras
+    };
+  
+    this.AutorService.create(data).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.message = '';
+        this.submitted = true;
+      },
+      error: (e) => console.error(e)
+    });
   }
+  
 
 
   newAutor(): void {
