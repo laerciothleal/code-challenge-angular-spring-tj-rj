@@ -115,7 +115,6 @@
           </div>
         </div>
 
-        <!-- Campo Autores -->
         <div class="form-group">
           <label for="autores">Autores:</label>
           <select
@@ -123,12 +122,18 @@
             [(ngModel)]="livroRequest.autoresIds"
             name="autores"
             class="form-control"
+            required
           >
-            <option *ngFor="let autor of autores" [value]="autor.codau">{{ autor.nome }}</option>
+            <option
+              *ngFor="let autor of autores || []"
+              [value]="autor.codau"
+              [selected]="livroRequest.autoresIds.includes(autor.codau)"
+            >
+              {{ autor.nome }}
+            </option>
           </select>
         </div>
-
-        <!-- Campo Assuntos -->
+        
         <div class="form-group">
           <label for="assuntos">Assuntos:</label>
           <select
@@ -136,8 +141,15 @@
             [(ngModel)]="livroRequest.assuntosIds"
             name="assuntos"
             class="form-control"
+            required
           >
-            <option *ngFor="let assunto of assuntos" [value]="assunto.codas">{{ assunto.descricao }}</option>
+            <option
+              *ngFor="let assunto of assuntos || []"
+              [value]="assunto.codas"
+              [selected]="livroRequest.assuntosIds.includes(assunto.codas)"
+            >
+              {{ assunto.descricao }}
+            </option>
           </select>
         </div>
 

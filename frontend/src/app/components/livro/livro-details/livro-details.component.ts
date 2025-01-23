@@ -89,26 +89,26 @@ export class LivroDetailsComponent implements OnInit {
   retrieveAutores(callback?: () => void): void {
     this.autorService.getAll().subscribe({
       next: (data) => {
-        this.autores = data;
-        console.log("Autores carregados:", data);
+        this.autores = data || [];
         if (callback) callback();
       },
       error: (e) => {
-        console.error("Erro ao carregar autores:", e);
+        console.error('Erro ao carregar autores:', e);
+        this.autores = []; 
         if (callback) callback();
       },
     });
   }
-
+  
   retrieveAssuntos(callback?: () => void): void {
     this.assuntoService.getAll().subscribe({
       next: (data) => {
-        this.assuntos = data;
-        console.log("Assuntos carregados:", data);
+        this.assuntos = data || []; 
         if (callback) callback();
       },
       error: (e) => {
-        console.error("Erro ao carregar assuntos:", e);
+        console.error('Erro ao carregar assuntos:', e);
+        this.assuntos = []; 
         if (callback) callback();
       },
     });
