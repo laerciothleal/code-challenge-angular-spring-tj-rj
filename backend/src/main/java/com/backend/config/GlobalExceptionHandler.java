@@ -157,7 +157,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler(AssuntoNotFoundException.class)
+    @ExceptionHandler(AutorNotFoundException.class)
     @ResponseBody
     public ApiErrorResponse handleEntityAutorNotFoundException(AutorNotFoundException e) {
         log.error("Entity not found", e);
@@ -166,7 +166,7 @@ public class GlobalExceptionHandler {
 
 
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler(AssuntoNotFoundException.class)
+    @ExceptionHandler(LivroNotFoundException.class)
     @ResponseBody
     public ApiErrorResponse handleEntityLivroNotFoundException(LivroNotFoundException e) {
         log.error("Entity not found", e);

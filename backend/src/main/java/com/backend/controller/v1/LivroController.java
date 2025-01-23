@@ -1,8 +1,6 @@
 package com.backend.controller.v1;
 
 import com.backend.controller.v1.request.CreateLivroRequest;
-import com.backend.controller.v1.response.AssuntoResponse;
-import com.backend.controller.v1.response.AutorResponse;
 import com.backend.controller.v1.response.LivroResponse;
 import com.backend.mappper.LivroMapper;
 import com.backend.model.Livro;
@@ -21,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/livros")
@@ -68,27 +64,10 @@ public class LivroController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Livro encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class))), @ApiResponse(responseCode = "404", description = "Livro não encontrado")})
     @GetMapping("/{id}")
     public ResponseEntity<LivroResponse> getById(@Parameter(description = "Id do livro") @PathVariable Integer id) {
-        Optional<Livro> livro = livroService.findById(id);
-
-        List<AutorResponse> autores = livro.get().getLivroAutores().stream()
-                .map(la -> new AutorResponse(la.getAutor().getCodau(), la.getAutor().getNome()))
-                .collect(Collectors.toList());
-
-        List<AssuntoResponse> assuntos = livro.get().getLivroAssuntos().stream()
-                .map(la -> new AssuntoResponse(la.getAssunto().getCodas(), la.getAssunto().getDescricao()))
-                .collect(Collectors.toList());
-
-
-        return new ResponseEntity<>(new LivroResponse(
-                livro.get().getCodL(),
-                livro.get().getTitulo(),
-                livro.get().getEditora(),
-                livro.get().getEdicao(),
-                livro.get().getAnoPublicacao(),
-                livro.get().getValor(),
-                autores,
-                assuntos
-        ), HttpStatus.OK);
+        return livroService.findById(id)
+                .map(livroMapper::toResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Obter todos os livros", description = "Recupera todos os livros registrados no sistema.")
