@@ -28,9 +28,9 @@ public record CreateLivroRequest(
         BigDecimal valor,
 
         @NotNull(message = "O valor não pode ser nulo.")
-        List<Integer> autoresIds,  // IDs dos autores associados
+        List<Integer> autoresIds,
 
         @NotNull(message = "O valor não pode ser nulo.")
-        List<Integer> assuntosIds // IDs dos assuntos associados
+        List<Integer> assuntosIds
 ) {
 }
