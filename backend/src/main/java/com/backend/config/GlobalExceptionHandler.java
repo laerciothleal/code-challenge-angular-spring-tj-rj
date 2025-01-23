@@ -1,7 +1,9 @@
 package com.backend.config;
 
 import com.backend.controller.v1.response.ApiErrorResponse;
-import com.backend.exception.ObjectNotFoundException;
+import com.backend.exception.AssuntoNotFoundException;
+import com.backend.exception.AutorNotFoundException;
+import com.backend.exception.LivroNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
@@ -147,9 +149,26 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler(ObjectNotFoundException.class)
+    @ExceptionHandler(AssuntoNotFoundException.class)
     @ResponseBody
-    public ApiErrorResponse handleEntityObjectNotFoundException(ObjectNotFoundException e) {
+    public ApiErrorResponse handleEntityAssuntoNotFoundException(AssuntoNotFoundException e) {
+        log.error("Entity not found", e);
+        return buildApiError(e, NOT_FOUND);
+    }
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(AssuntoNotFoundException.class)
+    @ResponseBody
+    public ApiErrorResponse handleEntityAutorNotFoundException(AutorNotFoundException e) {
+        log.error("Entity not found", e);
+        return buildApiError(e, NOT_FOUND);
+    }
+
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(AssuntoNotFoundException.class)
+    @ResponseBody
+    public ApiErrorResponse handleEntityLivroNotFoundException(LivroNotFoundException e) {
         log.error("Entity not found", e);
         return buildApiError(e, NOT_FOUND);
     }
