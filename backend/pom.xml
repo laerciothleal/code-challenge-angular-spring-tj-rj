@@ -95,7 +95,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.3.Final</version> <!-- Utilize a versão mais recente -->
+            <version>1.6.3</version> <!-- Utilize a versão mais recente -->
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
