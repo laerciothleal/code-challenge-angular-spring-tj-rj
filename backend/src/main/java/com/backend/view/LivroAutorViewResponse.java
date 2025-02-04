@@ -1,8 +1,6 @@
 package com.backend.view;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +17,7 @@ import java.math.BigDecimal;
 public class LivroAutorViewResponse {
 
     @Id
+    private Long id;
     private String autorNome;
     private String livroAssuntos;
     private String livroTitulo;

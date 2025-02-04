@@ -1,5 +1,6 @@
 CREATE OR replace VIEW vw_livros_por_autor AS
 SELECT
+    ROW_NUMBER() OVER () AS id,
     a.nome AS autor_nome,
     l.titulo AS livro_titulo,
     l.editora AS livro_editora,
