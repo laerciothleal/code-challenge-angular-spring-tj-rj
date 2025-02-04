@@ -3,6 +3,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Id</th>
         <th>Autor</th>
         <th>Assunto</th>
         <th>Título</th>
@@ -14,6 +15,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of relatorio">
+        <td>{{ item.id }}</td>
         <td>{{ item.autorNome }}</td>
         <td>{{ item.livroAssuntos }}</td>
         <td>{{ item.livroTitulo }}</td>

@@ -131,7 +131,7 @@
 
         <!-- Campo Valor -->
         <div class="form-group">
-          <label for="valor">Valor</label>
+          <label for="valor">Valor R$</label>
           <input
             type="text"
             class="form-control"
@@ -139,6 +139,10 @@
             required
             [(ngModel)]="currentLivro.valor"
             name="valor"
+            mask="separator.2"
+            thousandSeparator="."
+            decimalMarker=","
+            [dropSpecialCharacters]="true"
             pattern="^\d{1,7}(\.\d{0,2})?$"
             maxlength="12"
             #valor="ngModel"

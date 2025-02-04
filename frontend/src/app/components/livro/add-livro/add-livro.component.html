@@ -92,7 +92,7 @@
 
         <!-- Campo Valor -->
         <div class="form-group">
-          <label for="valor">Valor</label>
+          <label for="valor">Valor R$</label>
           <input
             type="text"
             class="form-control"
@@ -103,7 +103,6 @@
             mask="separator.2"
             thousandSeparator="."
             decimalMarker=","
-            prefix="R$ "
             [dropSpecialCharacters]="true"
             pattern="^\d{1,7}(\.\d{0,2})?$"
             maxlength="12"

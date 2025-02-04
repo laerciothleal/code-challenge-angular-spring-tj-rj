@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Relatorio {
+  id: number;
   autorNome: string;
   livroTitulo: string;
   livroEditora: string;
