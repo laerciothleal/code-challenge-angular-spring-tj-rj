@@ -20,12 +20,10 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 import { RelatorioComponent } from './components/relatorio/relatorio.component';
 
-// Importações para configuração de localização
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { LOCALE_ID } from '@angular/core';
 
-// Registrar a localização pt-BR
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
@@ -48,11 +46,11 @@ registerLocaleData(localePt, 'pt-BR');
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxMaskDirective, // Diretiva para usar máscaras
+    NgxMaskDirective,
   ],
   providers: [
-    provideNgxMask(), // Provedor necessário para o ngx-mask
-    { provide: LOCALE_ID, useValue: 'pt-BR' }, // Configuração de localização
+    provideNgxMask(),
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
   bootstrap: [AppComponent],
 })

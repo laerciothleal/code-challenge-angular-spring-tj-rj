@@ -29,7 +29,7 @@ export class AddAutorComponent implements OnInit {
     }
   
     const data = {
-      nome: this.autor.nome.trim() // Remove espaços em branco extras
+      nome: this.autor.nome.trim()
     };
   
     this.AutorService.create(data).subscribe({

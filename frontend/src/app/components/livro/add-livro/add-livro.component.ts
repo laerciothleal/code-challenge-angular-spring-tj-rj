@@ -20,11 +20,11 @@ export class AddLivroComponent implements OnInit {
     valor: 0,
   };
 
-  autores: Autor[] = []; // Lista de autores para o select
-  assuntos: Assunto[] = []; // Lista de assuntos para o select
+  autores: Autor[] = [];
+  assuntos: Assunto[] = [];
   livroRequest = {
-    autoresIds: [] as number[], // IDs dos autores selecionados
-    assuntosIds: [] as number[], // IDs dos assuntos selecionados
+    autoresIds: [] as number[],
+    assuntosIds: [] as number[],
   };
 
   submitted = false;

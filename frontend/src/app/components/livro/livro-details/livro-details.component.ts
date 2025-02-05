@@ -23,11 +23,11 @@ export class LivroDetailsComponent implements OnInit {
     valor: 0,
   };
 
-  autores: Autor[] = []; // Lista de autores
-  assuntos: Assunto[] = []; // Lista de assuntos
+  autores: Autor[] = [];
+  assuntos: Assunto[] = [];
   livroRequest = {
-    autoresIds: [] as number[], // IDs dos autores selecionados
-    assuntosIds: [] as number[], // IDs dos assuntos selecionados
+    autoresIds: [] as number[],
+    assuntosIds: [] as number[],
   };
 
   message = '';
