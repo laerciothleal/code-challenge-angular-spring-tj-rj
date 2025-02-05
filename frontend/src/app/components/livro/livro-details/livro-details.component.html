@@ -18,7 +18,7 @@
         <label><strong>Ano Publicação: </strong></label> {{ currentLivro.anoPublicacao }}
       </div>
       <div>
-        <label><strong>Valor: </strong></label> {{ currentLivro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        <label><strong>Preço: </strong></label> {{ currentLivro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
       </div>
       <a class="btn btn-info" routerLink="/livro/{{ currentLivro.codL }}">
         Atualizar
@@ -131,7 +131,7 @@
 
         <!-- Campo Valor -->
         <div class="form-group">
-          <label for="valor">Valor R$</label>
+          <label for="valor">Preço R$</label>
           <input
             type="text"
             class="form-control"

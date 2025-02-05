@@ -12,7 +12,7 @@
           [class.active]="i == currentIndex"
           (click)="setActiveLivro(livro, i)"
         >
-        Id: {{ livro.codL}} <br>Título: {{ livro.titulo }} <br>Valor: {{ livro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        Id: {{ livro.codL}} <br>Título: {{ livro.titulo }} <br>Preço: {{ livro.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
         </li>
       }
     </ul>
