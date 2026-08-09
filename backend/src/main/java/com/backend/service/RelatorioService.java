@@ -1,9 +1,11 @@
 package com.backend.service;
 
+import com.backend.controller.v1.response.RelatorioResponse;
+import com.backend.mapper.RelatorioMapper;
 import com.backend.repository.LivroAutorViewRepository;
-import com.backend.view.LivroAutorViewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,9 +14,10 @@ import java.util.List;
 public class RelatorioService {
 
     private final LivroAutorViewRepository livroAutorViewRepository;
+    private final RelatorioMapper relatorioMapper;
 
-    public List<LivroAutorViewResponse> getLivrosPorAutor() {
-        return livroAutorViewRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<RelatorioResponse> getLivrosPorAutor() {
+        return relatorioMapper.toResponseList(livroAutorViewRepository.findAll());
     }
-
 }

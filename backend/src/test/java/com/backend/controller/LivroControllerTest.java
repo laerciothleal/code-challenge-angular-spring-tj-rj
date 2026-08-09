@@ -1,54 +1,118 @@
 package com.backend.controller;
 
+import com.backend.config.GlobalExceptionHandler;
 import com.backend.controller.v1.LivroController;
+import com.backend.controller.v1.request.CreateLivroRequest;
+import com.backend.controller.v1.response.LivroResponse;
+import com.backend.exception.LivroNotFoundException;
+import com.backend.mapper.LivroMapper;
 import com.backend.model.Livro;
 import com.backend.service.LivroService;
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(LivroController.class)
+@Import(GlobalExceptionHandler.class)
 class LivroControllerTest {
 
-    @InjectMocks
-    private LivroController livroController;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Mock
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
     private LivroService livroService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
+    @MockBean
+    private LivroMapper livroMapper;
 
     @Test
-    void shouldGetAllLivros() {
-        List<Livro> livros = List.of(new Livro());
-        when(livroService.findAll()).thenReturn(livros);
+    void shouldCreateLivro() throws Exception {
+        CreateLivroRequest request = request();
+        Livro saved = Livro.builder().codL(1).titulo("Clean Code").build();
+        LivroResponse response = LivroResponse.builder()
+                .codL(1)
+                .titulo("Clean Code")
+                .autores(List.of())
+                .assuntos(List.of())
+                .build();
 
-        ResponseEntity<List<Livro>> response = livroController.getAll();
+        when(livroService.save(request)).thenReturn(saved);
+        when(livroMapper.toResponse(saved)).thenReturn(response);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(livros, response.getBody());
-        verify(livroService, times(1)).findAll();
+        mockMvc.perform(post("/api/v1/livros")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.codL").value(1))
+                .andExpect(jsonPath("$.titulo").value("Clean Code"));
     }
 
     @Test
-    void shouldDeleteLivroById() {
-        when(livroService.existsById(1)).thenReturn(true);
+    void shouldGetAllLivros() throws Exception {
+        Livro livro = Livro.builder().codL(1).titulo("Clean Code").build();
+        when(livroService.findAll()).thenReturn(List.of(livro));
+        when(livroMapper.toResponseList(List.of(livro))).thenReturn(List.of(
+                LivroResponse.builder().codL(1).titulo("Clean Code").autores(List.of()).assuntos(List.of()).build()
+        ));
 
-        ResponseEntity<Void> response = livroController.deleteById(1);
+        mockMvc.perform(get("/api/v1/livros"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].codL").value(1));
+    }
 
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(livroService, times(1)).deleteById(1);
+    @Test
+    void shouldReturn404WhenLivroMissing() throws Exception {
+        when(livroService.findById(99)).thenThrow(new LivroNotFoundException(99));
+
+        mockMvc.perform(get("/api/v1/livros/99"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteLivro() throws Exception {
+        mockMvc.perform(delete("/api/v1/livros/1"))
+                .andExpect(status().isNoContent());
+
+        verify(livroService).deleteById(1);
+    }
+
+    @Test
+    void shouldReturn404WhenDeletingMissingLivro() throws Exception {
+        doThrow(new LivroNotFoundException(1)).when(livroService).deleteById(1);
+
+        mockMvc.perform(delete("/api/v1/livros/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    private static CreateLivroRequest request() {
+        return new CreateLivroRequest(
+                "Clean Code",
+                "Alta Books",
+                1,
+                "2008",
+                BigDecimal.TEN,
+                List.of(1),
+                List.of(1)
+        );
     }
 }

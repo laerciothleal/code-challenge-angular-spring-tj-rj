@@ -1,23 +1,23 @@
 @if (viewMode) {
-  @if (currentAssunto.codas) {
+  @if (currentAssunto.codigoAs) {
   <h4>Assunto</h4>
 
   <div>
-    <label><strong>Id: </strong></label> {{ currentAssunto.codas }}
+    <label><strong>Id: </strong></label> {{ currentAssunto.codigoAs }}
   </div>
 
   <div>
     <label><strong>Descrição: </strong></label> {{ currentAssunto.descricao }}
   </div>
 
-  <a class="btn btn btn-info" routerLink="/assunto/{{ currentAssunto.codas }}">
+  <a class="btn btn btn-info" routerLink="/assunto/{{ currentAssunto.codigoAs }}">
     Atualizar
   </a>
   } @else {
   <p>Selecione um item da lista para edição!</p>
   }
 } @else {
-  @if (currentAssunto.codas) {
+  @if (currentAssunto.codigoAs) {
   <div class="edit-form">
     <h4>Assunto</h4>
     <form #assuntoForm="ngForm">
@@ -29,7 +29,7 @@
           class="form-control"
           id="id"
           readonly
-          [(ngModel)]="currentAssunto.codas"
+          [(ngModel)]="currentAssunto.codigoAs"
           name="id"
         />
       </div>

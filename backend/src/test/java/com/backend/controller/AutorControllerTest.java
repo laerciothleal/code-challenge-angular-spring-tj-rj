@@ -1,82 +1,137 @@
 package com.backend.controller;
 
+import com.backend.config.GlobalExceptionHandler;
 import com.backend.controller.v1.AutorController;
 import com.backend.controller.v1.request.CreateAutorRequest;
 import com.backend.controller.v1.response.AutorResponse;
+import com.backend.exception.AutorNotFoundException;
+import com.backend.mapper.AutorMapper;
 import com.backend.model.Autor;
 import com.backend.service.AutorService;
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(AutorController.class)
+@Import(GlobalExceptionHandler.class)
 class AutorControllerTest {
 
-    @InjectMocks
-    private AutorController autorController;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Mock
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
     private AutorService autorService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @MockBean
+    private AutorMapper autorMapper;
 
     @Test
-    void shouldSaveAutor() {
+    void shouldCreateAutor() throws Exception {
         CreateAutorRequest request = new CreateAutorRequest("Test");
-        Autor savedAutor = new Autor(1, "Test");
+        Autor saved = new Autor(1, "Test");
+        AutorResponse response = AutorResponse.builder().codAu(1).nome("Test").build();
 
-        when(autorService.save(request)).thenReturn(savedAutor);
+        when(autorService.save(request)).thenReturn(saved);
+        when(autorMapper.toResponse(saved)).thenReturn(response);
 
-        ResponseEntity<Autor> response = autorController.save(request);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(savedAutor, response.getBody());
-        verify(autorService, times(1)).save(request);
+        mockMvc.perform(post("/api/v1/autores")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.codAu").value(1))
+                .andExpect(jsonPath("$.nome").value("Test"));
     }
 
     @Test
-    void shouldGetAllAutores() {
-        List<Autor> autores = List.of(new Autor(1, "Test"));
-        when(autorService.findAll()).thenReturn(autores);
-
-        ResponseEntity<List<Autor>> response = autorController.getAll();
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(autores, response.getBody());
-        verify(autorService, times(1)).findAll();
+    void shouldRejectBlankName() throws Exception {
+        mockMvc.perform(post("/api/v1/autores")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"nome\":\"\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
     }
 
     @Test
-    void shouldGetAutorById() {
+    void shouldGetAutorById() throws Exception {
         Autor autor = new Autor(1, "Test");
-        when(autorService.findById(1)).thenReturn(Optional.of(autor));
+        AutorResponse response = AutorResponse.builder().codAu(1).nome("Test").build();
 
-        ResponseEntity<AutorResponse> response = autorController.getById(1);
+        when(autorService.findById(1)).thenReturn(autor);
+        when(autorMapper.toResponse(autor)).thenReturn(response);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(autor, response.getBody());
-        verify(autorService, times(1)).findById(1);
+        mockMvc.perform(get("/api/v1/autores/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.codAu").value(1));
     }
 
     @Test
-    void shouldDeleteAutorById() {
-        when(autorService.existsById(1)).thenReturn(true);
+    void shouldReturn404WhenAutorMissing() throws Exception {
+        when(autorService.findById(99)).thenThrow(new AutorNotFoundException(99));
 
-        ResponseEntity<Void> response = autorController.deleteById(1);
+        mockMvc.perform(get("/api/v1/autores/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404));
+    }
 
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(autorService, times(1)).deleteById(1);
+    @Test
+    void shouldGetAllAutores() throws Exception {
+        Autor autor = new Autor(1, "Test");
+        when(autorService.findAll()).thenReturn(List.of(autor));
+        when(autorMapper.toResponseList(List.of(autor)))
+                .thenReturn(List.of(AutorResponse.builder().codAu(1).nome("Test").build()));
+
+        mockMvc.perform(get("/api/v1/autores"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].codAu").value(1));
+    }
+
+    @Test
+    void shouldUpdateAutor() throws Exception {
+        CreateAutorRequest request = new CreateAutorRequest("Novo");
+        Autor updated = new Autor(1, "Novo");
+        when(autorService.update(1, request)).thenReturn(updated);
+        when(autorMapper.toResponse(updated)).thenReturn(AutorResponse.builder().codAu(1).nome("Novo").build());
+
+        mockMvc.perform(patch("/api/v1/autores/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value("Novo"));
+    }
+
+    @Test
+    void shouldDeleteAutor() throws Exception {
+        mockMvc.perform(delete("/api/v1/autores/1"))
+                .andExpect(status().isNoContent());
+
+        verify(autorService).deleteById(1);
+    }
+
+    @Test
+    void shouldReturn404WhenDeletingMissingAutor() throws Exception {
+        doThrow(new AutorNotFoundException(1)).when(autorService).deleteById(1);
+
+        mockMvc.perform(delete("/api/v1/autores/1"))
+                .andExpect(status().isNotFound());
     }
 }

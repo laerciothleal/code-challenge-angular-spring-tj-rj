@@ -1,6 +1,5 @@
 export class Autor {
-  codau?: any;
+  codAu?: number;
   nome?: string;
   selected?: boolean;
-
 }

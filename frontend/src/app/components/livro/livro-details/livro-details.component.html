@@ -165,8 +165,8 @@
           >
             <option
               *ngFor="let autor of autores || []"
-              [value]="autor.codau"
-              [selected]="livroRequest.autoresIds.includes(autor.codau)"
+              [value]="autor.codAu"
+              [selected]="livroRequest.autoresIds.includes(autor.codAu)"
             >
               {{ autor.nome }}
             </option>
@@ -185,8 +185,8 @@
           >
             <option
               *ngFor="let assunto of assuntos || []"
-              [value]="assunto.codas"
-              [selected]="livroRequest.assuntosIds.includes(assunto.codas)"
+              [value]="assunto.codigoAs"
+              [selected]="livroRequest.assuntosIds.includes(assunto.codigoAs)"
             >
               {{ assunto.descricao }}
             </option>

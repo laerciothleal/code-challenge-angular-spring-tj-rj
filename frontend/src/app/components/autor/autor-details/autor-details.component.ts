@@ -49,7 +49,7 @@ export class AutorDetailsComponent implements OnInit {
   
     this.message = '';
     this.autorService
-      .update(this.currentAutor.codau, this.currentAutor)
+      .update(this.currentAutor.codAu, this.currentAutor)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -63,7 +63,7 @@ export class AutorDetailsComponent implements OnInit {
   
 
  deleteAutor(): void {
-  this.autorService.delete(this.currentAutor.codau).subscribe({
+  this.autorService.delete(this.currentAutor.codAu).subscribe({
     next: () => {
       this.errorMessage = null; 
       this.router.navigate(['/autor']);

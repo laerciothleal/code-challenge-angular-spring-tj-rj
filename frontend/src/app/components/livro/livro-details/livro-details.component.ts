@@ -73,7 +73,7 @@ export class LivroDetailsComponent implements OnInit {
   // Preencher autores já selecionados
   preselectAutores(): void {
     this.livroRequest.autoresIds.forEach((id) => {
-      const autor = this.autores.find((a) => a.codau === id);
+      const autor = this.autores.find((a) => a.codAu === id);
       if (autor) autor['selected'] = true;
     });
   }
@@ -81,7 +81,7 @@ export class LivroDetailsComponent implements OnInit {
   // Preencher assuntos já selecionados
   preselectAssuntos(): void {
     this.livroRequest.assuntosIds.forEach((id) => {
-      const assunto = this.assuntos.find((a) => a.codas === id);
+      const assunto = this.assuntos.find((a) => a.codigoAs === id);
       if (assunto) assunto['selected'] = true;
     });
   }

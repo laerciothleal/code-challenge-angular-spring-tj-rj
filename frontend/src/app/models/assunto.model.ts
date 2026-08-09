@@ -1,6 +1,5 @@
 export class Assunto {
-  codas?: any;
+  codigoAs?: number;
   descricao?: string;
   selected?: boolean;
-
 }

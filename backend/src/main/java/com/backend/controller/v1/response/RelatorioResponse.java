@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 @Builder
 public record RelatorioResponse(
+        Long id,
         String autorNome,
         String livroAssuntos,
         String livroTitulo,
@@ -14,5 +15,4 @@ public record RelatorioResponse(
         String livroAnoPublicacao,
         BigDecimal livroValor
 ) {
-
 }

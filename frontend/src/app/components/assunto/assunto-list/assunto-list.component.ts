@@ -42,7 +42,7 @@ export class AssuntoListComponent implements OnInit {
   }
 
   trackByCodAs(index: number, assunto: Assunto): number {
-    return assunto.codas;
+    return assunto.codigoAs;
   }
 
 }

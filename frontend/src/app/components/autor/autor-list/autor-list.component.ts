@@ -41,7 +41,7 @@ export class AutorListComponent implements OnInit {
   }
 
   trackByCodau(index: number, autor: Autor): number {
-    return autor.codau!;
+    return autor.codAu!;
   }
 
 }

@@ -2,8 +2,7 @@ package com.backend.controller.v1;
 
 import com.backend.controller.v1.request.CreateLivroRequest;
 import com.backend.controller.v1.response.LivroResponse;
-import com.backend.mappper.LivroMapper;
-import com.backend.model.Livro;
+import com.backend.mapper.LivroMapper;
 import com.backend.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +15,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,68 +33,58 @@ import java.util.List;
 public class LivroController {
 
     private final LivroService livroService;
-
     private final LivroMapper livroMapper;
 
     @Operation(summary = "Criar um livro", description = "Cria um livro com base nas informações fornecidas.")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Livro criado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class)))})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Livro criado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LivroResponse.class)))
+    })
     @PostMapping
-    public ResponseEntity<Livro> save(@Valid @RequestBody CreateLivroRequest createLivroRequest) {
-
-        Livro livro = livroMapper.toEntity(createLivroRequest);
-        Livro savedLivro = livroService.saveOrUpdateRelations(
-                livro,
-                createLivroRequest.autoresIds(),
-                createLivroRequest.assuntosIds()
-        );
-
-        return new ResponseEntity<>(savedLivro, HttpStatus.CREATED);
+    public ResponseEntity<LivroResponse> save(@Valid @RequestBody CreateLivroRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(livroMapper.toResponse(livroService.save(request)));
     }
 
     @Operation(summary = "Atualizar um livro", description = "Atualiza um livro com base nas informações fornecidas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Livro atualizado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class))),
-            @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro no servidor")
+            @ApiResponse(responseCode = "200", description = "Livro atualizado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LivroResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Livro não encontrado")
     })
     @PatchMapping("/{id}")
-    public ResponseEntity<Livro> patch(@Parameter(description = "Id do livro") @PathVariable Integer id,
-                                       @Valid @RequestBody CreateLivroRequest createLivroRequest) {
-
-        Livro updatedLivro = livroService.update(id, createLivroRequest);
-        return new ResponseEntity<>(updatedLivro, HttpStatus.OK);
+    public ResponseEntity<LivroResponse> patch(@Parameter(description = "Id do livro") @PathVariable Integer id,
+                                               @Valid @RequestBody CreateLivroRequest request) {
+        return ResponseEntity.ok(livroMapper.toResponse(livroService.update(id, request)));
     }
 
-
     @Operation(summary = "Obter livro pelo Id", description = "Recupera um livro com base no seu Id.")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Livro encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class))), @ApiResponse(responseCode = "404", description = "Livro não encontrado")})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Livro encontrado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LivroResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Livro não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<LivroResponse> getById(@Parameter(description = "Id do livro") @PathVariable Integer id) {
-        return livroService.findById(id)
-                .map(livroMapper::toResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(livroMapper.toResponse(livroService.findById(id)));
     }
 
     @Operation(summary = "Obter todos os livros", description = "Recupera todos os livros registrados no sistema.")
-    @ApiResponse(responseCode = "200", description = "Lista de livros", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Livro.class)))
+    @ApiResponse(responseCode = "200", description = "Lista de livros",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LivroResponse.class)))
     @GetMapping
-    public ResponseEntity<List<Livro>> getAll() {
-        List<Livro> livros = livroService.findAll();
-        return new ResponseEntity<>(livros, HttpStatus.OK);
+    public ResponseEntity<List<LivroResponse>> getAll() {
+        return ResponseEntity.ok(livroMapper.toResponseList(livroService.findAll()));
     }
 
     @Operation(summary = "Excluir livro por Id", description = "Exclui um livro com base no seu Id.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Livro excluído com sucesso"), @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
-            @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
+            @ApiResponse(responseCode = "204", description = "Livro excluído com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Livro não encontrado")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@Parameter(description = "Id do livro a ser excluído") @PathVariable Integer id) {
-        if (livroService.existsById(id)) {
-            livroService.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        livroService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

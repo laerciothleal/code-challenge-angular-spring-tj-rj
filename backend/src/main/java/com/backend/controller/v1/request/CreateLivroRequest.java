@@ -27,10 +27,10 @@ public record CreateLivroRequest(
         @Min(value = 0, message = "O valor deve ser maior ou igual a zero.")
         BigDecimal valor,
 
-        @NotNull(message = "O valor não pode ser nulo.")
+        @NotNull(message = "A lista de autores não pode ser nula.")
         List<Integer> autoresIds,
 
-        @NotNull(message = "O valor não pode ser nulo.")
+        @NotNull(message = "A lista de assuntos não pode ser nula.")
         List<Integer> assuntosIds
 ) {
 }

@@ -52,7 +52,7 @@ export class AssuntoDetailsComponent implements OnInit {
   
     this.message = '';
     this.assuntoService
-      .update(this.currentAssunto.codas, this.currentAssunto)
+      .update(this.currentAssunto.codigoAs, this.currentAssunto)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -66,7 +66,7 @@ export class AssuntoDetailsComponent implements OnInit {
   
 
   deleteAssunto(): void {
-    this.assuntoService.delete(this.currentAssunto.codas).subscribe({
+    this.assuntoService.delete(this.currentAssunto.codigoAs).subscribe({
       next: () => {
         this.errorMessage = null;
         this.router.navigate(['/assunto']);

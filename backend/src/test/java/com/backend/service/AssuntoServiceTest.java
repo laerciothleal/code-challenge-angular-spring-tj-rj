@@ -2,20 +2,25 @@ package com.backend.service;
 
 import com.backend.controller.v1.request.CreateAssuntoRequest;
 import com.backend.exception.AssuntoNotFoundException;
-import com.backend.mappper.AssuntoMapper;
+import com.backend.mapper.AssuntoMapper;
 import com.backend.model.Assunto;
 import com.backend.repository.AssuntoRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class AssuntoServiceTest {
 
     @InjectMocks
@@ -27,56 +32,58 @@ class AssuntoServiceTest {
     @Mock
     private AssuntoMapper assuntoMapper;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     void shouldSaveAssunto() {
         CreateAssuntoRequest request = new CreateAssuntoRequest("Assunto Teste");
-        Assunto mappedAssunto = new Assunto(1, "Assunto Teste");
+        Assunto mapped = new Assunto(null, "Assunto Teste");
+        Assunto saved = new Assunto(1, "Assunto Teste");
 
-        when(assuntoMapper.toEntity(request)).thenReturn(mappedAssunto);
-        when(assuntoRepository.save(mappedAssunto)).thenReturn(mappedAssunto);
+        when(assuntoMapper.toEntity(request)).thenReturn(mapped);
+        when(assuntoRepository.save(mapped)).thenReturn(saved);
 
         Assunto result = assuntoService.save(request);
 
-        assertNotNull(result);
-        assertEquals(mappedAssunto, result);
-        verify(assuntoRepository, times(1)).save(mappedAssunto);
+        assertEquals(1, result.getCodas());
+        verify(assuntoRepository).save(mapped);
     }
 
     @Test
-    void shouldThrowWhenUpdatingNonExistingAssunto() {
+    void shouldThrowWhenUpdatingMissingAssunto() {
         CreateAssuntoRequest request = new CreateAssuntoRequest("Assunto Teste");
-        int id = 1;
+        when(assuntoRepository.findById(1)).thenReturn(Optional.empty());
 
-        when(assuntoRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(AssuntoNotFoundException.class, () -> assuntoService.update(id, request));
-    }
-
-    @Test
-    void shouldDeleteAssuntoById() {
-        int id = 1;
-        doNothing().when(assuntoRepository).deleteById(id);
-
-        assuntoService.deleteById(id);
-
-        verify(assuntoRepository, times(1)).deleteById(id);
+        assertThrows(AssuntoNotFoundException.class, () -> assuntoService.update(1, request));
     }
 
     @Test
     void shouldFindAssuntoById() {
-        int id = 1;
         Assunto assunto = new Assunto(1, "Assunto Teste");
+        when(assuntoRepository.findById(1)).thenReturn(Optional.of(assunto));
 
-        when(assuntoRepository.findById(id)).thenReturn(Optional.of(assunto));
+        assertEquals(assunto, assuntoService.findById(1));
+    }
 
-        Optional<Assunto> result = assuntoService.findById(id);
+    @Test
+    void shouldFindAllAssuntos() {
+        when(assuntoRepository.findAll()).thenReturn(List.of(new Assunto(1, "A")));
 
-        assertTrue(result.isPresent());
-        assertEquals(assunto, result.get());
+        assertEquals(1, assuntoService.findAll().size());
+    }
+
+    @Test
+    void shouldDeleteAssuntoById() {
+        when(assuntoRepository.existsById(1)).thenReturn(true);
+        doNothing().when(assuntoRepository).deleteById(1);
+
+        assuntoService.deleteById(1);
+
+        verify(assuntoRepository).deleteById(1);
+    }
+
+    @Test
+    void shouldThrowWhenDeletingMissingAssunto() {
+        when(assuntoRepository.existsById(1)).thenReturn(false);
+
+        assertThrows(AssuntoNotFoundException.class, () -> assuntoService.deleteById(1));
     }
 }
